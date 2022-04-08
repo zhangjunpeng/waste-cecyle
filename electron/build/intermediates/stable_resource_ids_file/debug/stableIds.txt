@@ -1,0 +1,15 @@
+com.dp.electronic_scale:style/AppTheme = 0x7f070001
+com.dp.electronic_scale:string/hello_world = 0x7f060002
+com.dp.electronic_scale:menu/main = 0x7f050000
+com.dp.electronic_scale:style/AppBaseTheme = 0x7f070000
+com.dp.electronic_scale:string/app_name = 0x7f060001
+com.dp.electronic_scale:layout/activity_main = 0x7f040000
+com.dp.electronic_scale:id/action_settings = 0x7f030000
+com.dp.electronic_scale:id/test_et = 0x7f030004
+com.dp.electronic_scale:string/action_settings = 0x7f060000
+com.dp.electronic_scale:id/test_bt = 0x7f030003
+com.dp.electronic_scale:id/open_bt = 0x7f030001
+com.dp.electronic_scale:id/set_bt = 0x7f030002
+com.dp.electronic_scale:dimen/activity_horizontal_margin = 0x7f010000
+com.dp.electronic_scale:drawable/ic_launcher = 0x7f020000
+com.dp.electronic_scale:dimen/activity_vertical_margin = 0x7f010001

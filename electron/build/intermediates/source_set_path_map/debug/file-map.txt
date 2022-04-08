@@ -1,0 +1,8 @@
+com.dp.electronic_scale.electron-pngs-0 C:\work\medical-waste-recycle\electron\build\generated\res\pngs\debug
+com.dp.electronic_scale.electron-resValues-1 C:\work\medical-waste-recycle\electron\build\generated\res\resValues\debug
+com.dp.electronic_scale.electron-rs-2 C:\work\medical-waste-recycle\electron\build\generated\res\rs\debug
+com.dp.electronic_scale.electron-packageDebugResources-3 C:\work\medical-waste-recycle\electron\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.dp.electronic_scale.electron-packageDebugResources-4 C:\work\medical-waste-recycle\electron\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.dp.electronic_scale.electron-merged_res-5 C:\work\medical-waste-recycle\electron\build\intermediates\merged_res\debug
+com.dp.electronic_scale.electron-debug-6 C:\work\medical-waste-recycle\electron\src\debug\res
+com.dp.electronic_scale.electron-main-7 C:\work\medical-waste-recycle\electron\src\main\res
