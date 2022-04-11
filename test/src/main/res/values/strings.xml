@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="read_device_version">ReadDeviceVersion</string>
+    <string name="read_soft_version">ReadSoftVersion</string>
+    <string name="change_address">ChangeAddr</string>
+    <string name="open">Open</string>
+    <string name="read_weight">ReadWeight</string>
+    <string name="test_print">PrintTest</string>
+
+</resources>

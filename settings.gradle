@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "MedicalWasteRecycle"
 include ':app'
 include ':electron'
+include ':test'

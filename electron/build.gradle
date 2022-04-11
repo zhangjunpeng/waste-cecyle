@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.dp.electronic_scale"
-        minSdkVersion 15
+        minSdkVersion 19
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 21
     }
@@ -21,4 +21,7 @@ android {
 
 dependencies {
     implementation files('libs/DP_SerialportList1.3.jar')
+    // 添加 EnjoySDK gradle 依赖
+    implementation files('libs/enjoySDK.aar')
+
 }

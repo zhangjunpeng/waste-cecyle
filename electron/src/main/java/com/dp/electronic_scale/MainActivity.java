@@ -3,16 +3,24 @@ package com.dp.electronic_scale;
 import com.dp.dp_serialportlist.Serialport_Factory;
 import com.dp.dp_serialportlist.Serialport_Factory2;
 import com.dp.dp_serialportlist.b;
+import com.mc.enjoysdk.McSecure;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -25,8 +33,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		String apkRoot="chmod 777 "+getPackageCodePath();
-		SystemManager.RootCommand(apkRoot);
+
+		McSecure mcSecure = McSecure.getInstance(this);
+		int ret = mcSecure.setSecurePasswd("Abc12345", "Abc12345");
+		mcSecure.registSafeProgram("Abc12345");
+
+		Log.d("enjoy",mcSecure.checkSafeProgramOfSelf().toString());
+
 
 		mHandler=new MyHandler();		
 		sf=Serialport_Factory.getSerialport_Factory(this);
@@ -38,8 +51,9 @@ public class MainActivity extends Activity {
 		open_bt.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				sf2.OpenPort("ttyUSB10", "9600");
-				sf.OpenPort("ttyS3", "115200");
+				String[] paths=sf2.getAllDevicesPath();
+				sf2.OpenPort("ttyUSB", "9600");
+//				sf.OpenPort("ttyS3", "115200");
 			}
 		});
 		set_bt.setOnClickListener(new OnClickListener() {			
@@ -53,7 +67,10 @@ public class MainActivity extends Activity {
 				byte[] buf3="AT+ZERO\r\n".getBytes();//称重清零
 				byte[] buf4="AT+CAL=010000,002000,2,0".getBytes();//如 要 设 置 满 量 程 100kg0.01kg 的 秤 ， 且 有 20kg 的 校 准 砝 码 。 则 发 送 指 令
 				byte[] buf5="AT+CAW".getBytes();//发送校准砝码指令，校准参数及零点校准成功后，在秤台上放上设置值所对应的砝码后发送该指令。校准完成。
-				sf2.Sendbyte(buf1);
+
+				byte[] init="AT\r\n".getBytes();
+				sf2.Sendbyte(init);
+
 			}
 		});
 		test_bt.setOnClickListener(new OnClickListener() {			
@@ -81,10 +98,13 @@ public class MainActivity extends Activity {
 	 @SuppressLint("HandlerLeak")
 	class MyHandler extends Handler {
 			@Override
-			public void handleMessage(Message msg) {			
+			public void handleMessage(Message msg) {
+				Log.d("data",msg.toString());
+
 				switch (msg.what) {			
 				case Serialport_Factory2.BACKDATA: {
 					String backdata=msg.getData().getString("backdata");
+					Log.d("data",backdata);
 					String kg=backdata.substring(2, backdata.indexOf(","));
 					weight=Float.parseFloat(kg);
 					test_et.setText("称重："+weight+"Kg");
@@ -93,4 +113,5 @@ public class MainActivity extends Activity {
 			}
 		}
 	 }
+
 }
