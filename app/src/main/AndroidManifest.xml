@@ -13,6 +13,11 @@
         android:theme="@style/Theme.MedicalWasteRecycle"
         tools:targetApi="31">
         <activity
+            android:name=".LoginAC"
+            android:exported="false"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
