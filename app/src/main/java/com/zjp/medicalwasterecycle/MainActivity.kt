@@ -2,10 +2,11 @@ package com.zjp.medicalwasterecycle
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.zjp.base.BaseActivity
 
 import com.zjp.medicalwasterecycle.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
