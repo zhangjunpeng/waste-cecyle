@@ -69,6 +69,21 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+//            Log.e(TAG, msg.toString());
+            if (msg.what==38) {
+                Log.e(TAG, msg.toString());
+            }
+            if (msg.obj != null&&msg.what!=33) {
+                Log.e(TAG, msg.toString());
+                byte[] data = (byte[]) msg.obj;
+                StringBuffer dataStr = new StringBuffer();
+                for (byte data1 : data) {
+                    dataStr.append(data1);
+                    dataStr.append(",");
+                }
+                Log.e(TAG, dataStr.toString());
+            }
+
             switch (msg.what) {
                 case MSG_CONNECTED_AUTO:
                     SearchUSB();
@@ -181,7 +196,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
 
             }
         });
-        usbfactory=USBFactory.getUsbFactory(mHandler);
+        usbfactory = USBFactory.getUsbFactory(mHandler);
         mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
         mHandler.sendEmptyMessageDelayed(MSG_CONNECTED_AUTO, 2000);
     }
@@ -368,6 +383,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
 //                    } else {
 //                        Log.d(TAG, "printer have open.");
 //                    }
+//                    usbfactory.Sendbyte("AT\r\n".getBytes());
+
+                    usbfactory.LabelBegin(560, 380);
+                    usbfactory.LableBarcode(70, 70,100, 2, 0, "5855555");
+                    usbfactory.Labelend();
+
                     break;
                 case R.id.check_printer_paper:
                     Log.d(TAG, "checkPaper()");
@@ -385,7 +406,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
                      */
                     if (haveScaleConnected()) {
                         usbfactory.LabelBegin(560, 380);//先设置标签的宽度和高度
-                        usbfactory.LabelQRCode(70, 70, 14, 4, "abc123");
+                        usbfactory.LabelQRCode(70, 70, 5, 4, "14121411");
                         usbfactory.Labelend();//必须要有标签结束，否则不会打印
                         usbfactory.PaperCut();
                     }
@@ -421,7 +442,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
                     usbfactory.setprintmode(2);
                     break;
                 case R.id.open_weight_devices:
-                    mSerialPort.open(new File("/dev/ttyS3"), 19200, 0);
+                    mSerialPort.open(new File("/dev/bus/usb/004/005"), 9600, 0);
                     break;
                 case R.id.get_weight_current:
                     mSerialPort.write(read_weight_current);
@@ -499,25 +520,32 @@ public class MainActivity extends Activity implements View.OnClickListener, Seri
         deviceList = mUsbManager.getDeviceList();
         deviceIterator = deviceList.values().iterator();
         usbfactory.CloseUSB();
+
         if (deviceList.size() > 0) {
             // 初始化选择对话框布局，并添加按钮和事件
             while (deviceIterator.hasNext()) { // 这里是if不是while，说明我只想支持一种device
                 final UsbDevice device = deviceIterator.next();
-                device.getInterfaceCount();
-                PendingIntent mPermissionIntent = PendingIntent.getBroadcast(mContext, 0, new Intent(mContext.getApplicationInfo().packageName), 0);
-                if (!mUsbManager.hasPermission(device)) {
-                    mUsbManager.requestPermission(device, mPermissionIntent);
-                } else {
-                    boolean connectUsb = usbfactory.connectUsb(mUsbManager, device);
-                    if (connectUsb) {
-                        Log.e(TAG, "USB连接成功!!");
-                        mHandler.removeMessages(MSG_CHECK_CONNECTED_RESULT);
-                        return;
+                if (device.getManufacturerName().equals("DP_PRINTER")) {
+                    device.getInterfaceCount();
+
+                    Log.e(TAG, "tInterfaceCount=="+ device.getInterfaceCount());
+
+                    PendingIntent mPermissionIntent = PendingIntent.getBroadcast(mContext, 0, new Intent(mContext.getApplicationInfo().packageName), 0);
+                    if (!mUsbManager.hasPermission(device)) {
+                        mUsbManager.requestPermission(device, mPermissionIntent);
                     } else {
-                        Log.e(TAG, "USB连接失败!!");
+                        boolean connectUsb = usbfactory.connectUsb(mUsbManager, device);
+                        if (connectUsb) {
+                            Log.e(TAG, "USB连接成功!!");
+
+                            mHandler.removeMessages(MSG_CHECK_CONNECTED_RESULT);
+                            return;
+                        } else {
+                            Log.e(TAG, "USB连接失败!!");
+                        }
+                        mHandler.removeMessages(MSG_CHECK_CONNECTED_RESULT);
+                        mHandler.sendEmptyMessageDelayed(MSG_CHECK_CONNECTED_RESULT, 2000);
                     }
-                    mHandler.removeMessages(MSG_CHECK_CONNECTED_RESULT);
-                    mHandler.sendEmptyMessageDelayed(MSG_CHECK_CONNECTED_RESULT, 2000);
                 }
             }
         }

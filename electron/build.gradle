@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.dp.electronic_scale"
         minSdkVersion 19
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 21
+        targetSdkVersion 32
     }
 
     buildTypes {
@@ -17,11 +18,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
     implementation files('libs/DP_SerialportList1.3.jar')
     // 添加 EnjoySDK gradle 依赖
     implementation files('libs/enjoySDK.aar')
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
