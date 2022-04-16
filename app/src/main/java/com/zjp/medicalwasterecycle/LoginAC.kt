@@ -7,9 +7,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityLoginBinding
 
-class LoginAC : AppCompatActivity() {
+class LoginAC : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -18,9 +19,6 @@ class LoginAC : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-
 
     }
 

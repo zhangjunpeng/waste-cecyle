@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MedicalWasteRecycle"
         tools:targetApi="31">
+        <activity
+            android:name="com"
+            android:exported="false"
+            android:label="@string/title_activity_base"
+            android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar" />
         <activity
             android:name=".LoginAC"
             android:exported="false"

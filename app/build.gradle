@@ -45,4 +45,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     testImplementation 'junit:junit:4.13.2'
 
+
+    implementation "com.blankj:utilcodex:1.30.6"
+
 }

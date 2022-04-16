@@ -8,12 +8,22 @@
     tools:context=".LoginAC">
     <!-- 恩语logo.png -->
     <ImageView
-        android:id="@+id/恩语logo.png"
+        android:id="@+id/logo"
         android:layout_width="108dp"
         android:layout_height="20dp"
         android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="169px"
+        android:layout_marginTop="122dp"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="182dp"
+        android:layout_height="21dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="61dp"
+        android:layout_marginRight="34dp"
+        android:text="zzzzz"
         />
 
 
