@@ -1,7 +1,9 @@
 package com.zjp.medicalwasterecycle
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.LogUtils
 import com.zjp.base.BaseActivity
 
 import com.zjp.medicalwasterecycle.databinding.ActivityMainBinding
@@ -19,6 +21,9 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(binding.toolbar)
 
     }
+
+
+
 
 
 }

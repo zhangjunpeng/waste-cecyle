@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
-import com.zjp.medicalwasterecycle.databinding.ActivityBaseBinding
 import com.zjp.receiver.BluetoothMonitorReceiver
 
 open class BaseActivity : AppCompatActivity() {
@@ -37,14 +36,18 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
+
+    var keyStr=""
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        when(keyCode){
-            KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER->{
-                LogUtils.i(event!!.displayLabel)
-                onRevicerScan()
-            }
+//        LogUtils.i(keyCode.toString()+"==="+event!!.unicodeChar.toString())
+        if (event!!.unicodeChar==10){
+            LogUtils.i(keyStr)
+            keyStr=""
+        }else{
+            keyStr+=event.displayLabel
+
         }
-        return super.onKeyUp(keyCode, event)
+        return true
     }
 
     override fun onDestroy() {
