@@ -1,16 +1,16 @@
 package com.nextmar.requestdata.datasource
 
 import android.text.TextUtils
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
-import com.nextmar.requestdata.GsonUtils
-import com.nextmar.requestdata.NameSpace
 import com.nextmar.requestdata.RESTURL
 import com.nextmar.requestdata.Result
 import com.nextmar.requestdata.model.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 
 import okhttp3.*
-import java.util.concurrent.TimeUnit
 
 
 class DataSource() {
@@ -45,8 +45,7 @@ class DataSource() {
             val dataStr = response.body!!.string()
             LogUtils.i(dataStr)
             if (response.isSuccessful) {
-
-                val model = GsonUtils.fromJson(dataStr, ResultModel::class.java)
+                 val model  = Json.decodeFromString<ResultModel>(dataStr)
                 if (model.res!!) {
 //                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
 //                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)

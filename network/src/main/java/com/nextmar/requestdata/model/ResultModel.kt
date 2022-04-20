@@ -8,11 +8,11 @@ package com.nextmar.requestdata.model
 import kotlinx.serialization.*
 
 @Serializable
-data class ResultModel (
+data class ResultModel<T> (
     val res: Boolean? = null,
     val code: String? = null,
     val msg: String? = null,
-    val data: Any? = null,
+    val data: T?= null,
     val count: Long? = null
 )
 
