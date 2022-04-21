@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.nextmar.requestdata.RESTURL
 import com.nextmar.requestdata.Result
 import com.nextmar.requestdata.model.*
+import com.nextmar.requestdata.repo.Repository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -13,9 +14,15 @@ import kotlinx.serialization.json.Json
 import okhttp3.*
 
 
-class DataSource() {
+class DataSource() : DataSourceInterface {
 
-    val errorMsg = ResultModel<Any?>(false, "", "服务器异常")
+    companion object {
+        val instance: DataSource by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            DataSource()
+        }
+    }
+
+    val errorMsg = ResultModel<Nothing>(false, "", "服务器异常")
 
 
     val client = OkHttpClient.Builder().build()
@@ -35,7 +42,8 @@ class DataSource() {
         return call.execute()
     }
 
-    fun login(username: String, password: String): Result<NumberLoginData> {
+
+    override fun numberLogin(username: String, password: String): Result<NumberLoginData> {
 
         try {
             val formBody =
@@ -53,7 +61,7 @@ class DataSource() {
                 }
                 return Result.Success(model.data as NumberLoginData)
             } else {
-                val model = Json.decodeFromString<ResultModel<Any>>(dataStr)
+                val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
                 return Result.Error(
                     model
                 )
@@ -63,6 +71,112 @@ class DataSource() {
         }
     }
 
+    override fun memberShowInfo(id: String): Result<MemberShowData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun rooShowInfo(id: String): Result<RoomShowData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun carTotal(projectId: String, roomId: String): Result<CarTotalData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun bagShowInfo(code: String): Result<BagShowData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun addBag(code: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun bagWeight(): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun roomBagList(roomId: String): Result<RoomBagListData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun editBagCategory(
+        bagId: String, category: String, dialysis: String, placenta: String
+    ): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun editBagWeight(bagId: String, weight: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun editBagQuality(
+        force: String,
+        bagId: String,
+        unBroken: String,
+        sterile: String,
+        tight: String,
+        classified: String,
+        commodious: String,
+        fewMedicalL: String
+    ): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun printOneBag(bagId: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun printRoomBag(roomId: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun signRoomBag(roomId: String, signToken: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun batchNum(): Result<String> {
+        TODO("Not yet implemented")
+    }
+
+    override fun isBox(code: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override fun packBag(batchCode: String, boxCode: String, bagId: String): Result<BagPackData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun scanNurseInfo(signToken: String): Result<NurseShowData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun institutionList(): Result<InstitutionsData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun institutionMemberList(): Result<InstitutionsMembersData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun stockBag(): Result<BagShowData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun bagDeliver(boxCode: String, disMemberId: String): Result<BagDeliverData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun signAgain(signToken: String, bagCode: String): Result<Nothing> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deliverHis(page: String, limit: String): Result<DeliverHisData> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getNursePackList(): Result<NursePackListData> {
+        TODO("Not yet implemented")
+    }
 
 
 }

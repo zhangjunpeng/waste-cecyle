@@ -11,7 +11,7 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 
 @Serializable
-data class InstitutionsMembersDatum (
+data class InstitutionsMembersData (
     val id: String? = null,
 
     @SerialName("dis_id")

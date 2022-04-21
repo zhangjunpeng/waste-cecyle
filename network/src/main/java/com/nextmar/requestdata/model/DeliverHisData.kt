@@ -11,7 +11,7 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 
 @Serializable
-data class DeliverHisDatum (
+data class DeliverHisData (
     @SerialName("dis_member_name")
     val disMemberName: String? = null,
 

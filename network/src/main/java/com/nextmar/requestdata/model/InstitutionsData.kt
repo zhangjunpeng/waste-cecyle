@@ -6,12 +6,9 @@
 package com.nextmar.requestdata.model
 
 import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 @Serializable
-data class InstitutionsDatum (
+data class InstitutionsData (
     val id: String? = null,
     val name: String? = null,
     val region: String? = null,

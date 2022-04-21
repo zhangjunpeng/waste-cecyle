@@ -19,7 +19,7 @@
             android:label="@string/title_activity_base"
             android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar" />
         <activity
-            android:name=".LoginAC"
+            android:name=".login.LoginAC"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar" />
