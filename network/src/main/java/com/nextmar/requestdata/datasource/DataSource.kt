@@ -15,7 +15,7 @@ import okhttp3.*
 
 class DataSource() {
 
-    val errorMsg = ResultModel(false, "", "服务器异常")
+    val errorMsg = ResultModel<Any?>(false, "", "服务器异常")
 
 
     val client = OkHttpClient.Builder().build()
@@ -36,6 +36,7 @@ class DataSource() {
     }
 
     fun login(username: String, password: String): Result<NumberLoginData> {
+
         try {
             val formBody =
                 FormBody.Builder().add("account", username).add("password", password).build()
@@ -45,23 +46,23 @@ class DataSource() {
             val dataStr = response.body!!.string()
             LogUtils.i(dataStr)
             if (response.isSuccessful) {
-                 val model  = Json.decodeFromString<ResultModel>(dataStr)
+                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
                 if (model.res!!) {
 //                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
 //                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)
                 }
                 return Result.Success(model.data as NumberLoginData)
             } else {
+                val model = Json.decodeFromString<ResultModel<Any>>(dataStr)
                 return Result.Error(
-                    GsonUtils.fromJson(
-                        dataStr, ResultModel::class.java
-                    )
+                    model
                 )
             }
         } catch (e: java.lang.Exception) {
             return Result.Error(errorMsg)
         }
     }
+
 
 
 }
