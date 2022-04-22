@@ -1,8 +1,10 @@
 package com.nextmar.requestdata.repo
 
-import com.nextmar.requestdata.Result
+import com.nextmar.requestdata.RequestResult
 import com.nextmar.requestdata.datasource.DataSource
 import com.nextmar.requestdata.model.*;
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 class Repository(private val dataSource: DataSource) {
@@ -14,8 +16,11 @@ class Repository(private val dataSource: DataSource) {
     }
 
 
-    fun login(username: String, password: String): Result<NumberLoginData> {
-        return dataSource.numberLogin(username, password)
+    fun login(username: String, password: String): RequestResult<NumberLoginData> {
+        return
+        withContext(Dispatchers.IO){
+            dataSource.numberLogin(username, password)
+        }
     }
 
 

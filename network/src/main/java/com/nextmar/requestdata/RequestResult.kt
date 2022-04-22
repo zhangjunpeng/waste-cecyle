@@ -7,10 +7,10 @@ import com.nextmar.requestdata.model.ResultModel
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
-sealed class Result<out T : Any> {
+sealed class RequestResult<out T : Any> {
 
-    data class Success<out T : Any>(val data: T) : Result<T>()
-    data class Error(val error: ResultModel<Nothing>) : Result<Nothing>()
+    data class Success<out T : Any>(val data: T) : RequestResult<T>()
+    data class Error(val error: ResultModel<Nothing>) : RequestResult<Nothing>()
 
     override fun toString(): String {
         return when (this) {

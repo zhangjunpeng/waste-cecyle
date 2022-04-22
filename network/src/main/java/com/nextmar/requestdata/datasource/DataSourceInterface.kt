@@ -1,32 +1,32 @@
 package com.nextmar.requestdata.datasource
 
 import com.nextmar.requestdata.model.*
-import  com.nextmar.requestdata.Result
+import  com.nextmar.requestdata.RequestResult
 
 interface DataSourceInterface {
 
-    open fun numberLogin(username: String, password: String): Result<NumberLoginData>
+    open fun numberLogin(username: String, password: String): RequestResult<NumberLoginData>
 
-    open fun memberShowInfo(id: String): Result<MemberShowData>
+    open fun memberShowInfo(id: String): RequestResult<MemberShowData>
 
-    open fun rooShowInfo(id: String): Result<RoomShowData>
+    open fun rooShowInfo(id: String): RequestResult<RoomShowData>
 
 
-    open fun carTotal(projectId: String, roomId: String): Result<CarTotalData>
+    open fun carTotal(projectId: String, roomId: String): RequestResult<CarTotalData>
 
-    open fun bagShowInfo(code: String): Result<BagShowData>
+    open fun bagShowInfo(code: String): RequestResult<BagShowData>
 
-    open fun addBag(code: String): Result<Nothing>
+    open fun addBag(code: String): RequestResult<Nothing>
 
-    open fun bagWeight(): Result<Nothing>
+    open fun bagWeight(): RequestResult<Nothing>
 
-    open fun roomBagList(roomId: String): Result<RoomBagListData>
+    open fun roomBagList(roomId: String): RequestResult<RoomBagListData>
 
     open fun editBagCategory(
         bagId: String, category: String, dialysis: String, placenta: String
-    ): Result<Nothing>
+    ): RequestResult<Nothing>
 
-    open fun editBagWeight(bagId: String, weight: String): Result<Nothing>
+    open fun editBagWeight(bagId: String, weight: String): RequestResult<Nothing>
 
     open fun editBagQuality(
         force: String,
@@ -37,35 +37,35 @@ interface DataSourceInterface {
         classified: String,
         commodious: String,
         fewMedicalL: String
-    ): Result<Nothing>
+    ): RequestResult<Nothing>
 
-    open fun printOneBag(bagId: String): Result<Nothing>
+    open fun printOneBag(bagId: String): RequestResult<Nothing>
 
-    open fun printRoomBag(roomId: String): Result<Nothing>
+    open fun printRoomBag(roomId: String): RequestResult<Nothing>
 
-    open fun signRoomBag(roomId: String, signToken: String): Result<Nothing>
+    open fun signRoomBag(roomId: String, signToken: String): RequestResult<Nothing>
 
-    open fun batchNum(): Result<String>
+    open fun batchNum(): RequestResult<String>
 
-    open fun isBox(code: String): Result<Boolean>
+    open fun isBox(code: String): RequestResult<Boolean>
 
-    open fun packBag(batchCode: String, boxCode: String, bagId: String): Result<BagPackData>
+    open fun packBag(batchCode: String, boxCode: String, bagId: String): RequestResult<BagPackData>
 
-    open fun scanNurseInfo(signToken: String): Result<NurseShowData>
+    open fun scanNurseInfo(signToken: String): RequestResult<NurseShowData>
 
-    open fun institutionList(): Result<InstitutionsData>
+    open fun institutionList(): RequestResult<InstitutionsData>
 
-    open fun institutionMemberList(): Result<InstitutionsMembersData>
+    open fun institutionMemberList(): RequestResult<InstitutionsMembersData>
 
-    open fun stockBag(): Result<BagShowData>
+    open fun stockBag(): RequestResult<BagShowData>
 
-    open fun bagDeliver(boxCode: String, disMemberId: String): Result<BagDeliverData>
+    open fun bagDeliver(boxCode: String, disMemberId: String): RequestResult<BagDeliverData>
 
-    open fun signAgain(signToken: String, bagCode: String): Result<Nothing>
+    open fun signAgain(signToken: String, bagCode: String): RequestResult<Nothing>
 
-    open fun deliverHis(page: String, limit: String): Result<DeliverHisData>
+    open fun deliverHis(page: String, limit: String): RequestResult<DeliverHisData>
 
-    open fun getNursePackList(): Result<NursePackListData>
+    open fun getNursePackList(): RequestResult<NursePackListData>
 
 
 }
