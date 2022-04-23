@@ -27,8 +27,12 @@ open class BaseActivity : AppCompatActivity() {
 
         setView()
 
+
     }
     open fun setView(){
+
+    }
+    open fun initViewModel(){
 
     }
 
