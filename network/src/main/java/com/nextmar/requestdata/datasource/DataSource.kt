@@ -44,7 +44,7 @@ class DataSource() : DataSourceInterface {
 
         try {
             val formBody =
-                FormBody.Builder().add("account", username).add("password", password).build()
+                FormBody.Builder().add("phone", username).add("password", password).build()
             val request: Request = Request.Builder().url(RESTURL.NormalLogin).post(formBody).build()
             val call: Call = client.newCall(request)
             val response = call.execute()
@@ -55,7 +55,11 @@ class DataSource() : DataSourceInterface {
                 if (model.res!!) {
 //                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
 //                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)
+
+                }else{
+
                 }
+
                 return RequestResult.Success(model.data as NumberLoginData)
             } else {
                 val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)

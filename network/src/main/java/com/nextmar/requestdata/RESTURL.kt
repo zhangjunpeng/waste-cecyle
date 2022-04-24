@@ -3,8 +3,7 @@ package com.nextmar.requestdata
 
 class RESTURL {
     companion object {
-        val BaseURL_Test = "https://testtrace.yuanfangyun.com"
-        val BaseUrl_Release = "https://mojing.nextmar.com/index.php"
+        val BaseURL_Test = "https://testtrace.yuanfangyun.com/app"
         val BaseUrl = BaseURL_Test
         val BaseUrl_Retrofit = "$BaseUrl/"
 

@@ -24,7 +24,7 @@ open class BaseActivity : AppCompatActivity() {
         }
 
         registerReceiver(receiver, intentFilter)
-
+        initViewModel()
         setView()
 
 
