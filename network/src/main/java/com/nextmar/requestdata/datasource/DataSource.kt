@@ -40,7 +40,7 @@ class DataSource() : DataSourceInterface {
     }
 
 
-    override fun numberLogin(username: String, password: String): RequestResult<NumberLoginData> {
+    override fun numberLogin(username: String, password: String): RequestResult<Any> {
 
         try {
             val formBody =
@@ -55,12 +55,15 @@ class DataSource() : DataSourceInterface {
                 if (model.res!!) {
 //                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
 //                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)
+                    return RequestResult.Success(model.data as NumberLoginData)
 
                 }else{
-
+                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                    return RequestResult.Error(
+                        error
+                    )
                 }
 
-                return RequestResult.Success(model.data as NumberLoginData)
             } else {
                 val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
                 return RequestResult.Error(

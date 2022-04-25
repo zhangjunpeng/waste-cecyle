@@ -5,7 +5,7 @@ import  com.nextmar.requestdata.RequestResult
 
 interface DataSourceInterface {
 
-    open fun numberLogin(username: String, password: String): RequestResult<NumberLoginData>
+    open fun numberLogin(username: String, password: String): RequestResult<Any>
 
     open fun memberShowInfo(id: String): RequestResult<MemberShowData>
 
