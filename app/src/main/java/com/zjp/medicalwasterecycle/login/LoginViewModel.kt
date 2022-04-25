@@ -25,7 +25,7 @@ class LoginViewModel(val dataSource: DataSource) : BaseViewModel() {
             return@launch withContext(Dispatchers.IO){
                 val result=dataSource.numberLogin(account,password)
                 if (result is RequestResult.Success){
-                    loginResult.postValue(result.data)
+                    loginResult.postValue(result.data as NumberLoginData)
                 }else if (result is RequestResult.Error){
                     errorResult.postValue(result.error)
                 }

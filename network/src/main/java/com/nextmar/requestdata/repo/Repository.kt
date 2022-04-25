@@ -16,7 +16,7 @@ class Repository(private val dataSource: DataSource) {
     }
 
 
-    suspend fun login(username: String, password: String): RequestResult<NumberLoginData> {
+    suspend fun login(username: String, password: String): RequestResult<Any> {
         return withContext(Dispatchers.IO){
             dataSource.numberLogin(username, password)
         }
