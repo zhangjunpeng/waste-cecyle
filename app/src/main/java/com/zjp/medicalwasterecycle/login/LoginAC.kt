@@ -9,7 +9,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityLoginBinding
 import com.zjp.utils.DialogUtil
@@ -36,7 +38,8 @@ class LoginAC : BaseActivity() {
             ViewModelProvider(this, MyViewModelFactory.instance)[LoginViewModel::class.java]
         loginViewModel.loginResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()
-
+            LogUtils.i(it!!.token)
+            SPUtils.getInstance().put(NameSpace.TokenName,it.token)
         }
         loginViewModel.errorResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()

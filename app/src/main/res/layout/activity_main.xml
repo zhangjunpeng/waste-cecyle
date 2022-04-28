@@ -7,15 +7,23 @@
     tools:context=".main.MainActivity">
 
     <include
+        android:id="@+id/title"
         layout="@layout/title_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="59dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:layout_width="527dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/login_bt_bg"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title"></LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

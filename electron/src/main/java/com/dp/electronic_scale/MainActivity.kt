@@ -6,14 +6,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import com.mc.enjoysdk.McSecure
-import com.dp.electronic_scale.MainActivity.MyHandler
 import com.dp.dp_serialportlist.Serialport_Factory
 import com.dp.dp_serialportlist.Serialport_Factory2
 import com.dp.electronic_scale.databinding.ActivityMainBinding
-import java.lang.Exception
+import com.mc.enjoysdk.McSecure
 
 class MainActivity : Activity() {
 
@@ -46,11 +42,12 @@ class MainActivity : Activity() {
         sf = Serialport_Factory.getSerialport_Factory(this)
         sf2 = Serialport_Factory2.getSerialport_Factory(this, mHandler)
 
-        sf.OpenPort("ttyUSB2", "9600")
 
 
         binding.openBt.setOnClickListener {
-            sf2.Sendbyte(init)
+//            sf.OpenPort("ttyUSB2", "9600")
+                sf2.OpenPort("ttyS2", "9600")
+
 
         }
         binding.setBt.setOnClickListener {
