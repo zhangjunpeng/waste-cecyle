@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bagpack.BagPackActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextClock
+        android:id="@+id/textclock_bag_pack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="51dp"
+        android:format12Hour="yyyy/MM/dd hh:mm:ss"
+        android:format24Hour="yyyy/MM/dd hh:mm:ss"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/textclock_bag_pack"
+        app:layout_constraintRight_toRightOf="@+id/textclock_bag_pack"
+        android:text="医废入库"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:id="@+id/batch_num"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="179dp"
+        android:text="批次编号：1054898164984646865"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/box_num_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="116dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="45dp"
+        app:layout_constraintLeft_toLeftOf="@+id/batch_num"
+        app:layout_constraintTop_toBottomOf="@+id/batch_num"
+        >
+        <TextView
+            android:layout_width="224dp"
+            android:layout_height="116dp"
+            android:background="#D4D4D4"
+            android:gravity="right|center_vertical"
+            android:textColor="#FF8D1A"
+            android:textSize="36sp"
+            android:text="医废箱编号："
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="297dp"
+            android:layout_height="116dp"
+            android:background="#FF8D1A"
+            android:text=" 10664859151"
+            android:gravity="left|center_vertical"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/totoal_weight"
+        android:layout_width="246dp"
+        android:layout_height="232dp"
+        android:background="@drawable/green_radius"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="43dp"
+        app:layout_constraintLeft_toLeftOf="@+id/batch_num"
+        app:layout_constraintTop_toBottomOf="@+id/box_num_lay"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:text="569,44kg"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="入库总重量"
+            android:layout_marginTop="43dp"
+            android:textColor="@color/text_color"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="246dp"
+        android:layout_height="232dp"
+        android:background="@drawable/green_radius"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintLeft_toRightOf="@+id/totoal_weight"
+        app:layout_constraintTop_toTopOf="@+id/totoal_weight"
+        android:layout_marginLeft="28dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="36dp"
+            android:text="7包"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="入库包裹数"
+            android:layout_marginTop="43dp"
+            android:textColor="@color/text_color"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/rukumingxi"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/box_num_lay"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="136dp"
+        android:layout_marginLeft="28dp"
+        android:text="入库明细"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="608dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/rukumingxi"
+        app:layout_constraintTop_toBottomOf="@+id/rukumingxi"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/main_border"
+        android:layout_height="471dp"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyler_bag_pack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

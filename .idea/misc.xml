@@ -3,11 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/blue_radius.xml" value="0.227" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/green_radius.xml" value="0.227" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/ic_launcher_background.xml" value="0.122" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/login_edit_bg.xml" value="0.2275" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/main_border.xml" value="0.255" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/red_radius.xml" value="0.227" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/sign_bg.xml" value="0.227" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/under_line_change.xml" value="0.227" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/drawable/under_line_change2.xml" value="0.227" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout-v28/activity_main.xml" value="0.11041666666666666" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/activity_bag_pack.xml" value="0.10457920792079207" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/activity_login.xml" value="0.2" />
-        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/activity_room_scan.xml" value="0.16" />
+        <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/bag_info.xml" value="0.10457920792079207" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/dialog_progress.xml" value="0.10478547854785479" />
         <entry key="..\:/work/medical-waste-recycle/app/src/main/res/layout/title_icon.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15" />
