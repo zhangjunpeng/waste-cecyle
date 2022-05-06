@@ -7,12 +7,12 @@ interface DataSourceInterface {
 
     open fun numberLogin(username: String, password: String): RequestResult<Any>
 
-    open fun memberShowInfo(id: String): RequestResult<MemberShowData>
+    open fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData>
 
     open fun rooShowInfo(id: String): RequestResult<RoomShowData>
 
 
-    open fun carTotal(projectId: String, roomId: String): RequestResult<CarTotalData>
+    open fun carTotal(token:String,projectId: String, roomId: String): RequestResult<CarTotalData>
 
     open fun bagShowInfo(code: String): RequestResult<BagShowData>
 

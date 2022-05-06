@@ -22,7 +22,10 @@ class MainActivity : BaseActivity() {
 
     override fun initViewModel() {
         mainViewModel =
-            ViewModelProvider(this, MyViewModelFactory.instance).get(MainViewModel::class.java)
+            ViewModelProvider(this, MyViewModelFactory.instance)[MainViewModel::class.java]
+        mainViewModel.memberShowInfonResult.observe(this){
+            binding.weightNum.text=it
+        }
     }
 
 

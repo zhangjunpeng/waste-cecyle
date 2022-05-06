@@ -75,16 +75,73 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-    override fun memberShowInfo(id: String): RequestResult<MemberShowData> {
-        TODO("Not yet implemented")
+
+    override fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData> {
+        try {
+            val formBody =
+                FormBody.Builder().add("id", id).build()
+            val request: Request = Request.Builder().url(RESTURL.NormalLogin).header("Token",token).post(formBody).build()
+            val call: Call = client.newCall(request)
+            val response = call.execute()
+            val dataStr = response.body!!.string()
+            LogUtils.i(dataStr)
+            if (response.isSuccessful) {
+                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
+                return if (model.res!!) {
+                    RequestResult.Success(model.data as MemberShowData)
+
+                }else{
+                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                    RequestResult.Error(
+                        error
+                    )
+                }
+
+            } else {
+                val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                return RequestResult.Error(
+                    model
+                )
+            }
+        } catch (e: java.lang.Exception) {
+            return RequestResult.Error(errorMsg)
+        }
     }
 
     override fun rooShowInfo(id: String): RequestResult<RoomShowData> {
         TODO("Not yet implemented")
     }
 
-    override fun carTotal(projectId: String, roomId: String): RequestResult<CarTotalData> {
-        TODO("Not yet implemented")
+    override fun carTotal(token:String,projectId: String, roomId: String): RequestResult<CarTotalData> {
+        try {
+            val formBody =
+                FormBody.Builder().add("project_id", projectId).build()
+            val request: Request = Request.Builder().url(RESTURL.NormalLogin).header("Token",token).post(formBody).build()
+            val call: Call = client.newCall(request)
+            val response = call.execute()
+            val dataStr = response.body!!.string()
+            LogUtils.i(dataStr)
+            if (response.isSuccessful) {
+                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
+                return if (model.res!!) {
+                    RequestResult.Success(model.data as CarTotalData)
+
+                }else{
+                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                    RequestResult.Error(
+                        error
+                    )
+                }
+
+            } else {
+                val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                return RequestResult.Error(
+                    model
+                )
+            }
+        } catch (e: java.lang.Exception) {
+            return RequestResult.Error(errorMsg)
+        }
     }
 
     override fun bagShowInfo(code: String): RequestResult<BagShowData> {

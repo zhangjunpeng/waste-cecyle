@@ -42,7 +42,9 @@ class LoginAC : BaseActivity() {
             DialogUtil.instance.dismissProgressDialog()
             LogUtils.i(it!!.token)
             SPUtils.getInstance().put(NameSpace.TokenName,it.token)
+            SPUtils.getInstance().put(NameSpace.ProjectID,it.projectID)
             startActivity(Intent(this,MainActivity::class.java))
+            finish()
         }
         loginViewModel.errorResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()

@@ -257,6 +257,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             >
             <TextView
+                android:id="@+id/weight_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#027D82"
@@ -285,6 +286,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             >
             <TextView
+                android:id="@+id/bag_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#027D82"
