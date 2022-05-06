@@ -1,5 +1,6 @@
 package com.zjp.medicalwasterecycle.login
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityLoginBinding
+import com.zjp.medicalwasterecycle.main.MainActivity
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
 
@@ -40,6 +42,7 @@ class LoginAC : BaseActivity() {
             DialogUtil.instance.dismissProgressDialog()
             LogUtils.i(it!!.token)
             SPUtils.getInstance().put(NameSpace.TokenName,it.token)
+            startActivity(Intent(this,MainActivity::class.java))
         }
         loginViewModel.errorResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()
