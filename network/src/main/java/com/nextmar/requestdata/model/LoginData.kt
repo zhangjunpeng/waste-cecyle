@@ -7,12 +7,9 @@ package com.nextmar.requestdata.model
 
 
 import kotlinx.serialization.*
-import kotlinx.serialization.json.*
-import kotlinx.serialization.descriptors.*
-import kotlinx.serialization.encoding.*
 
 @Serializable
-data class NumberLoginData (
+data class LoginData (
     val id: String? = null,
 
     @SerialName("project_id")

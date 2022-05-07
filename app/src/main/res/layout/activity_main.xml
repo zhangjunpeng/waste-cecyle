@@ -72,6 +72,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/scan_layout"
         >
         <LinearLayout
+            android:id="@+id/in_layout_main"
             android:layout_width="252dp"
             android:layout_height="match_parent"
             android:background="#00BAAD"
@@ -105,6 +106,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/out_layout_main"
             android:layout_width="252dp"
             android:layout_height="match_parent"
             android:background="#43CF7C"
@@ -168,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#0F0F0F"
                 android:textSize="20sp"
-                android:text="医废入库"
+                android:text="暂未收集"
                 android:layout_marginTop="19dp"
                 />
 

@@ -13,7 +13,7 @@ class RESTURL {
         val NormalLogin = "$BaseUrl/commonapi/member_login"
 
         //扫码登录
-        val ScanLogin = "$BaseUrl/commonapi/member_login"
+        val ScanLogin = "$BaseUrl/commonapi/scan_login"
 
         val PersonInfo = "$BaseUrl/projectapi/member_show"
 

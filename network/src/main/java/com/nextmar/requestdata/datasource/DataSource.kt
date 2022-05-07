@@ -25,6 +25,7 @@ class DataSource() : DataSourceInterface {
     val client = OkHttpClient.Builder().build()
 
 
+
     fun getResponse(paramMap: Map<String, String>, url: String): Response {
         val client = OkHttpClient.Builder()
 
@@ -40,7 +41,7 @@ class DataSource() : DataSourceInterface {
     }
 
 
-    override fun numberLogin(username: String, password: String): RequestResult<Any> {
+    override fun numberLogin(username: String, password: String): RequestResult<LoginData> {
 
         try {
             val formBody =
@@ -51,13 +52,13 @@ class DataSource() : DataSourceInterface {
             val dataStr = response.body!!.string()
             LogUtils.i(dataStr)
             if (response.isSuccessful) {
-                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
+                val model = Json.decodeFromString<ResultModel<LoginData>>(dataStr)
                 if (model.res!!) {
 //                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
 //                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)
-                    return RequestResult.Success(model.data as NumberLoginData)
+                    return RequestResult.Success(model.data as LoginData)
 
-                }else{
+                } else {
                     val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
                     return RequestResult.Error(
                         error
@@ -75,22 +76,59 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-
-    override fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData> {
+    override fun scanLogin(code: String): RequestResult<LoginData> {
         try {
             val formBody =
-                FormBody.Builder().add("id", id).build()
-            val request: Request = Request.Builder().url(RESTURL.NormalLogin).header("Token",token).post(formBody).build()
+                FormBody.Builder().add("code", code).build()
+            val request: Request = Request.Builder().url(RESTURL.ScanLogin).post(formBody).build()
             val call: Call = client.newCall(request)
             val response = call.execute()
             val dataStr = response.body!!.string()
             LogUtils.i(dataStr)
             if (response.isSuccessful) {
-                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
+                val model = Json.decodeFromString<ResultModel<LoginData>>(dataStr)
+                if (model.res!!) {
+//                    SPUtils.getInstance().put(NameSpace.IsLogin, true)
+//                    SPUtils.getInstance().put(NameSpace.Token, loggedInUser.data.api_key)
+                    return RequestResult.Success(model.data as LoginData)
+
+                } else {
+                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                    return RequestResult.Error(
+                        error
+                    )
+                }
+
+            } else {
+                val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                return RequestResult.Error(
+                    model
+                )
+            }
+        } catch (e: java.lang.Exception) {
+            return RequestResult.Error(errorMsg)
+        }
+
+    }
+
+
+    override fun memberShowInfo(token: String, id: String): RequestResult<MemberShowData> {
+        try {
+            val formBody =
+                FormBody.Builder().add("id", id).build()
+            val request: Request =
+                Request.Builder().url(RESTURL.NormalLogin).header("Token", token).post(formBody)
+                    .build()
+            val call: Call = client.newCall(request)
+            val response = call.execute()
+            val dataStr = response.body!!.string()
+            LogUtils.i(dataStr)
+            if (response.isSuccessful) {
+                val model = Json.decodeFromString<ResultModel<LoginData>>(dataStr)
                 return if (model.res!!) {
                     RequestResult.Success(model.data as MemberShowData)
 
-                }else{
+                } else {
                     val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
                     RequestResult.Error(
                         error
@@ -112,21 +150,30 @@ class DataSource() : DataSourceInterface {
         TODO("Not yet implemented")
     }
 
-    override fun carTotal(token:String,projectId: String, roomId: String): RequestResult<CarTotalData> {
+    override fun carTotal(
+        token: String,
+        projectId: String,
+        roomId: String?
+    ): RequestResult<CarTotalData> {
         try {
-            val formBody =
-                FormBody.Builder().add("project_id", projectId).build()
-            val request: Request = Request.Builder().url(RESTURL.NormalLogin).header("Token",token).post(formBody).build()
+            val url = StringBuffer(RESTURL.CarTotal)
+            url.append("?project_id=$projectId")
+            if (roomId!=null){
+                url.append("&room_id=$roomId")
+            }
+
+            val request: Request =
+                Request.Builder().url(url.toString()).header("Token", token).get().build()
             val call: Call = client.newCall(request)
             val response = call.execute()
             val dataStr = response.body!!.string()
             LogUtils.i(dataStr)
             if (response.isSuccessful) {
-                val model = Json.decodeFromString<ResultModel<NumberLoginData>>(dataStr)
+                val model = Json.decodeFromString<ResultModel<CarTotalData>>(dataStr)
                 return if (model.res!!) {
                     RequestResult.Success(model.data as CarTotalData)
 
-                }else{
+                } else {
                     val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
                     RequestResult.Error(
                         error
@@ -203,7 +250,11 @@ class DataSource() : DataSourceInterface {
         TODO("Not yet implemented")
     }
 
-    override fun packBag(batchCode: String, boxCode: String, bagId: String): RequestResult<BagPackData> {
+    override fun packBag(
+        batchCode: String,
+        boxCode: String,
+        bagId: String
+    ): RequestResult<BagPackData> {
         TODO("Not yet implemented")
     }
 

@@ -5,14 +5,16 @@ import  com.nextmar.requestdata.RequestResult
 
 interface DataSourceInterface {
 
-    open fun numberLogin(username: String, password: String): RequestResult<Any>
+    open fun numberLogin(username: String, password: String): RequestResult<LoginData>
+
+    open fun scanLogin(code: String):RequestResult<LoginData>
 
     open fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData>
 
     open fun rooShowInfo(id: String): RequestResult<RoomShowData>
 
 
-    open fun carTotal(token:String,projectId: String, roomId: String): RequestResult<CarTotalData>
+    open fun carTotal(token:String,projectId: String, roomId: String?): RequestResult<CarTotalData>
 
     open fun bagShowInfo(code: String): RequestResult<BagShowData>
 

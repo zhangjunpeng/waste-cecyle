@@ -26,8 +26,7 @@ open class BaseActivity : AppCompatActivity() {
         registerReceiver(receiver, intentFilter)
         initViewModel()
         setView()
-
-
+        initData()
     }
     open fun setView(){
 
@@ -36,7 +35,11 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
-    open fun onRevicerScan(){
+    open fun initData(){
+
+    }
+
+    open fun onRevicerScan(keyStr:String){
 
     }
 
@@ -45,9 +48,10 @@ open class BaseActivity : AppCompatActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
 //        LogUtils.i(keyCode.toString()+"==="+event!!.unicodeChar.toString())
         if (event!!.unicodeChar==10){
-            LogUtils.i(keyStr)
+            onRevicerScan(keyStr)
             keyStr=""
         }else{
+            LogUtils.i(event.displayLabel)
             keyStr+=event.displayLabel
 
         }

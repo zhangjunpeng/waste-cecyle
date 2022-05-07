@@ -60,6 +60,7 @@
             android:layout_marginTop="13dp"
             android:background="@drawable/login_edit_bg"
             android:gravity="center_vertical"
+            android:focusedByDefault="true"
             android:orientation="horizontal">
 
             <ImageView
@@ -75,7 +76,7 @@
                 android:layout_marginLeft="14dp"
                 android:background="@color/white"
                 android:layout_marginRight="14dp"
-                android:focusableInTouchMode="true"
+                android:selectAllOnFocus="true"
                 android:maxLines="1"
                 android:text="18336317096"
                 />
@@ -102,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
                 android:background="@color/white"
-                android:focusableInTouchMode="true"
+                android:selectAllOnFocus="true"
                 android:layout_marginRight="14dp"
                 android:inputType="textPassword"
                 android:maxLines="1"

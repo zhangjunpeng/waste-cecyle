@@ -35,6 +35,11 @@ class LoginAC : BaseActivity() {
         }
     }
 
+    override fun onRevicerScan(keyStr: String) {
+        DialogUtil.instance.showProgressDialog(this)
+        loginViewModel.scanLogin(keyStr)
+    }
+
     override fun initViewModel() {
         loginViewModel =
             ViewModelProvider(this, MyViewModelFactory.instance)[LoginViewModel::class.java]
