@@ -36,6 +36,9 @@ class LoginAC : BaseActivity() {
     }
 
     override fun onRevicerScan(keyStr: String) {
+        if (keyStr.isEmpty()){
+            return
+        }
         DialogUtil.instance.showProgressDialog(this)
         loginViewModel.scanLogin(keyStr)
     }

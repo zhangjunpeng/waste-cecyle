@@ -146,8 +146,38 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-    override fun rooShowInfo(id: String): RequestResult<RoomShowData> {
-        TODO("Not yet implemented")
+    override fun rooShowInfo(token: String, id: String): RequestResult<RoomShowData> {
+        try {
+            val url = StringBuffer(RESTURL.CodeGetRoom)
+            url.append("?code=$id")
+
+            val request: Request =
+                Request.Builder().url(url.toString()).header("Token", token).get().build()
+            val call: Call = client.newCall(request)
+            val response = call.execute()
+            val dataStr = response.body!!.string()
+            LogUtils.i(dataStr)
+            if (response.isSuccessful) {
+                val model = Json.decodeFromString<ResultModel<RoomShowData>>(dataStr)
+                return if (model.res!!) {
+                    RequestResult.Success(model.data as RoomShowData)
+
+                } else {
+                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                    RequestResult.Error(
+                        error
+                    )
+                }
+
+            } else {
+                val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
+                return RequestResult.Error(
+                    model
+                )
+            }
+        } catch (e: java.lang.Exception) {
+            return RequestResult.Error(errorMsg)
+        }
     }
 
     override fun carTotal(
@@ -191,11 +221,11 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-    override fun bagShowInfo(code: String): RequestResult<BagShowData> {
+    override fun bagShowInfo(token: String, code: String): RequestResult<BagShowData> {
         TODO("Not yet implemented")
     }
 
-    override fun addBag(code: String): RequestResult<Nothing> {
+    override fun addBag(token: String, code: String): RequestResult<Nothing> {
         TODO("Not yet implemented")
     }
 

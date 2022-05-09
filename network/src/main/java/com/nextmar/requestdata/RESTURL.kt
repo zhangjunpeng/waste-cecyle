@@ -19,6 +19,9 @@ class RESTURL {
 
         val RoomShow="$BaseUrl/projectapi/room_show"
 
+        val CodeGetRoom="$BaseUrl/projectapi/code_get_room"
+
+
         val CarTotal="$BaseUrl/projectapi/carTotal"
 
         val BagShpw="$BaseUrl/bagapi/bag_show_code"

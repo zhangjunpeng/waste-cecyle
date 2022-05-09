@@ -11,14 +11,14 @@ interface DataSourceInterface {
 
     open fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData>
 
-    open fun rooShowInfo(id: String): RequestResult<RoomShowData>
+    open fun rooShowInfo(token:String,id: String): RequestResult<RoomShowData>
 
 
     open fun carTotal(token:String,projectId: String, roomId: String?): RequestResult<CarTotalData>
 
-    open fun bagShowInfo(code: String): RequestResult<BagShowData>
+    open fun bagShowInfo(token:String,code: String): RequestResult<BagShowData>
 
-    open fun addBag(code: String): RequestResult<Nothing>
+    open fun addBag(token:String,code: String): RequestResult<Nothing>
 
     open fun bagWeight(): RequestResult<Nothing>
 

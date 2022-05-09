@@ -14,6 +14,7 @@ import com.zjp.medicalwasterecycle.bagpack.BagPackActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityMainBinding
 import com.zjp.medicalwasterecycle.outstock.OutHisActivity
 import com.zjp.medicalwasterecycle.outstock.WasteOutActivity
+import com.zjp.medicalwasterecycle.roomscan.RoomScanActivity
 import com.zjp.viewmodel.MyViewModelFactory
 
 class MainActivity : BaseActivity() {
@@ -56,5 +57,10 @@ class MainActivity : BaseActivity() {
         mainViewModel.getCartTotal()
     }
 
+    override fun onRevicerScan(keyStr: String) {
+        val intent=Intent(this,RoomScanActivity::class.java)
+        intent.putExtra("code",keyStr)
+        startActivity(intent)
+    }
 
 }

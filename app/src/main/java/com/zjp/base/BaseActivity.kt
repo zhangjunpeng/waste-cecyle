@@ -35,28 +35,35 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
-    open fun initData(){
+    open fun initData() {
 
     }
 
-    open fun onRevicerScan(keyStr:String){
+    open fun onRevicerScan(keyStr: String) {
 
     }
 
+    var keyStr = StringBuffer()
+    var count = 0
 
-    var keyStr=""
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-//        LogUtils.i(keyCode.toString()+"==="+event!!.unicodeChar.toString())
-        if (event!!.unicodeChar==10){
-            onRevicerScan(keyStr)
-            keyStr=""
-        }else{
+        LogUtils.i(event.toString())
+//        if (event!!.keyCode == KeyEvent.KEYCODE_SHIFT_LEFT) {
+//            return false
+//        }
+        count++
+        if (event!!.unicodeChar == 10) {
+            LogUtils.i(keyStr)
+            LogUtils.i(count)
+            onRevicerScan(keyStr.toString())
+            keyStr = StringBuffer()
+        } else {
             LogUtils.i(event.displayLabel)
-            keyStr+=event.displayLabel
-
+            keyStr.append(event.displayLabel)
         }
-        return true
+        return super.onKeyUp(keyCode, event)
     }
+
 
     override fun onDestroy() {
         unregisterReceiver(receiver)
