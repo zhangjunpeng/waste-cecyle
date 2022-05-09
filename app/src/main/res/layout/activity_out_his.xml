@@ -52,18 +52,52 @@
         android:background="@drawable/red_radius"
         />
 
+    <RelativeLayout
+        android:id="@+id/unselect_layout_his"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginRight="53dp"
+        android:background="@drawable/green_radius"
+        android:paddingLeft="31dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/unselect_num_his"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:gravity="center_vertical"
+            android:text="暂未收集 0个"
+            android:textColor="@color/white"
+            android:textSize="36sp" />
+
+        <ImageView
+            android:layout_width="74dp"
+            android:layout_height="73dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="73dp"
+            android:src="@drawable/unselect" />
+
+    </RelativeLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy_out_his"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/under_line_change2"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="199dp"
+        app:layout_constraintTop_toBottomOf="@+id/unselect_layout_his"
+        android:layout_marginTop="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="141dp"
         android:layout_marginRight="134dp"
-        app:layout_constraintBottom_toTopOf="@+id/back"
         />
 
 

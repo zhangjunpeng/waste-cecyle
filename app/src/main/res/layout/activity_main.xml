@@ -153,6 +153,7 @@
         app:layout_constraintLeft_toRightOf="@+id/scan_layout"
         >
         <LinearLayout
+            android:id="@+id/unselect_layout"
             android:layout_height="match_parent"
             android:layout_width="182dp"
             android:background="#F2F2F2"
@@ -177,6 +178,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/bag_reset_lauyout"
             android:layout_height="match_parent"
             android:layout_width="182dp"
             android:background="#F2F2F2"
@@ -202,6 +204,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/account_layout"
             android:layout_height="match_parent"
             android:layout_width="115dp"
             android:background="#F2F2F2"

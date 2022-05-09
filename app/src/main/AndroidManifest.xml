@@ -16,11 +16,16 @@
         android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".bagpack.BagResetActivity"
+            android:exported="true" >
+
+        </activity>
+        <activity
             android:name=".account.AccountActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".outstock.SelectComActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".outstock.OutHisActivity"
             android:exported="true" />
@@ -28,21 +33,18 @@
             android:name=".outstock.WasteOutActivity"
             android:exported="true" />
         <activity
-            android:name="com.zjp.medicalwasterecycle.bagpack.BagPackActivity"
+            android:name=".bagpack.BagPackActivity"
             android:exported="true" />
         <activity
             android:name="com.zjp.medicalwasterecycle.roomscan.RoomScanActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".login.LoginAC"
             android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar" >
+            android:theme="@style/Theme.MedicalWasteRecycle.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
