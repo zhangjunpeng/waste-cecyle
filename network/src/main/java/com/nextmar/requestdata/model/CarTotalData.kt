@@ -22,4 +22,5 @@ data class ListElement (
     val category: String? = null,
     val num: String? = null,
     val weight: Double? = null
+
 )

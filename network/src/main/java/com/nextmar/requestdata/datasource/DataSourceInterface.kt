@@ -18,19 +18,19 @@ interface DataSourceInterface {
 
     open fun bagShowInfo(token:String,code: String): RequestResult<BagShowData>
 
-    open fun addBag(token:String,code: String): RequestResult<Nothing>
+    open fun addBag(token:String,code: String): RequestResult<Any>
 
-    open fun bagWeight(): RequestResult<Nothing>
+    open fun bagWeight(token:String,): RequestResult<Any>
 
-    open fun roomBagList(roomId: String): RequestResult<RoomBagListData>
+    open fun roomBagList(token:String,roomId: String): RequestResult<RoomBagListData>
 
-    open fun editBagCategory(
+    open fun editBagCategory(token:String,
         bagId: String, category: String, dialysis: String, placenta: String
-    ): RequestResult<Nothing>
+    ): RequestResult<Any>
 
-    open fun editBagWeight(bagId: String, weight: String): RequestResult<Nothing>
+    open fun editBagWeight(token:String,bagId: String, weight: String): RequestResult<Any>
 
-    open fun editBagQuality(
+    open fun editBagQuality(token:String,
         force: String,
         bagId: String,
         unBroken: String,
@@ -39,35 +39,35 @@ interface DataSourceInterface {
         classified: String,
         commodious: String,
         fewMedicalL: String
-    ): RequestResult<Nothing>
+    ): RequestResult<Any>
 
-    open fun printOneBag(bagId: String): RequestResult<Nothing>
+    open fun printOneBag(token:String,bagId: String): RequestResult<Any>
 
-    open fun printRoomBag(roomId: String): RequestResult<Nothing>
+    open fun printRoomBag(token:String,roomId: String): RequestResult<Any>
 
-    open fun signRoomBag(roomId: String, signToken: String): RequestResult<Nothing>
+    open fun signRoomBag(token:String,roomId: String, signToken: String): RequestResult<Any>
 
-    open fun batchNum(): RequestResult<String>
+    open fun batchNum(token:String,): RequestResult<String>
 
-    open fun isBox(code: String): RequestResult<Boolean>
+    open fun isBox(token:String,code: String): RequestResult<Boolean>
 
-    open fun packBag(batchCode: String, boxCode: String, bagId: String): RequestResult<BagPackData>
+    open fun packBag(token:String,batchCode: String, boxCode: String, bagId: String): RequestResult<BagPackData>
 
-    open fun scanNurseInfo(signToken: String): RequestResult<NurseShowData>
+    open fun scanNurseInfo(token:String,signToken: String): RequestResult<NurseShowData>
 
-    open fun institutionList(): RequestResult<InstitutionsData>
+    open fun institutionList(token:String,): RequestResult<InstitutionsData>
 
-    open fun institutionMemberList(): RequestResult<InstitutionsMembersData>
+    open fun institutionMemberList(token:String,): RequestResult<InstitutionsMembersData>
 
-    open fun stockBag(): RequestResult<BagShowData>
+    open fun stockBag(token:String,): RequestResult<BagShowData>
 
-    open fun bagDeliver(boxCode: String, disMemberId: String): RequestResult<BagDeliverData>
+    open fun bagDeliver(token:String,boxCode: String, disMemberId: String): RequestResult<BagDeliverData>
 
-    open fun signAgain(signToken: String, bagCode: String): RequestResult<Nothing>
+    open fun signAgain(token:String,signToken: String, bagCode: String): RequestResult<Any>
 
-    open fun deliverHis(page: String, limit: String): RequestResult<DeliverHisData>
+    open fun deliverHis(token:String,page: String, limit: String): RequestResult<DeliverHisData>
 
-    open fun getNursePackList(): RequestResult<NursePackListData>
+    open fun getNursePackList(token:String,): RequestResult<NursePackListData>
 
 
 }
