@@ -33,6 +33,8 @@ data class MemberShowData (
     @SerialName("last_time")
     val lastTime: String? = null,
 
+    val token: String? = null,
+
     val pname: String? = null,
-    val pclassItem: JsonObject? = null
+    val pclassItem: String? = null
 )

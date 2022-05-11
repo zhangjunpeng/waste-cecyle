@@ -21,6 +21,8 @@ data class CarTotalData (
 data class ListElement (
     val category: String? = null,
     val num: String? = null,
-    val weight: Double? = null
+    val weight: Double? = null,
 
+    @SerialName("ruku_num")
+    val rukuNum: String? = null
 )

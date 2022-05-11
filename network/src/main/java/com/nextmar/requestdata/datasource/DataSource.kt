@@ -62,16 +62,16 @@ class DataSource() : DataSourceInterface {
     override fun memberShowInfo(token: String, id: String): RequestResult<MemberShowData> {
         val params = HashMap<String, String>()
         params["id"] = id
-        return post<MemberShowData>(params, RESTURL.NormalLogin, token)
+        return post<MemberShowData>(params, RESTURL.PersonInfo, token)
 
     }
 
-    override fun rooShowInfo(token: String, id: String): RequestResult<RoomShowData> {
-
+    override fun scanRoomInfo(token: String, id: String): RequestResult<RoomShowData> {
         val params = HashMap<String, String>()
         params["code"] = id
         return get<RoomShowData>(params, RESTURL.CodeGetRoom, token)
     }
+
 
     override fun carTotal(
         token: String,
@@ -271,7 +271,7 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-    inline fun <T : Any> get(
+    inline fun <reified T : Any> get(
         params: HashMap<String, String>,
         url: String,
         token: String? = null

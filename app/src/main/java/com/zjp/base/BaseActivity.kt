@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
+import com.nextmar.requestdata.NameSpace
+import com.zjp.medicalwasterecycle.databinding.TitleIconBinding
 import com.zjp.receiver.BluetoothMonitorReceiver
 
 open class BaseActivity : AppCompatActivity() {
@@ -27,6 +30,14 @@ open class BaseActivity : AppCompatActivity() {
         initViewModel()
         setView()
         initData()
+    }
+
+    fun setTitleContent(binding:TitleIconBinding){
+        binding.pname.text=SPUtils.getInstance().getString(NameSpace.ProjectName)
+        val name=SPUtils.getInstance().getString(NameSpace.Name)
+        val phone=SPUtils.getInstance().getString(NameSpace.Phone)
+
+        binding.userInfo.text="当前用户：$name $phone"
     }
     open fun setView(){
 

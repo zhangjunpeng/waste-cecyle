@@ -24,7 +24,7 @@ class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
     fun getRoomInfo(code:String){
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
-                val result = dataSource.rooShowInfo(
+                val result = dataSource.scanRoomInfo(
                     SPUtils.getInstance().getString(NameSpace.TokenName),
                     code
                 )

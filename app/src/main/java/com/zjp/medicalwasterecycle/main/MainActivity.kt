@@ -7,6 +7,9 @@ import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.SpanUtils
+import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.account.AccountActivity
 import com.zjp.medicalwasterecycle.bagpack.BagPackActivity
@@ -51,9 +54,17 @@ class MainActivity : BaseActivity() {
             binding.weightNum.text=it.totalWeight.toString()+"kg"
             binding.bagNum.text=it.totalNum.toString()+"包"
         }
+        mainViewModel.memberShowInfonResult.observe(this){
+            SPUtils.getInstance().put(NameSpace.ProjectName,it.pname)
+            SPUtils.getInstance().put(NameSpace.Phone,it.phone)
+            SPUtils.getInstance().put(NameSpace.Name,it.name)
+
+            setTitleContent(binding.title)
+        }
     }
 
     override fun initData() {
+        mainViewModel.memberShowInfo()
         mainViewModel.getCartTotal()
     }
 

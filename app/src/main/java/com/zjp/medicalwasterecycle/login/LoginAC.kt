@@ -51,6 +51,8 @@ class LoginAC : BaseActivity() {
             LogUtils.i(it!!.token)
             SPUtils.getInstance().put(NameSpace.TokenName,it.token)
             SPUtils.getInstance().put(NameSpace.ProjectID,it.projectID)
+            SPUtils.getInstance().put(NameSpace.Phone,it.phone)
+
             startActivity(Intent(this,MainActivity::class.java))
             finish()
         }

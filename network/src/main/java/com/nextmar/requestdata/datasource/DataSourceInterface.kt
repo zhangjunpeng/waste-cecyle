@@ -11,7 +11,7 @@ interface DataSourceInterface {
 
     open fun memberShowInfo(token:String,id: String): RequestResult<MemberShowData>
 
-    open fun rooShowInfo(token:String,id: String): RequestResult<RoomShowData>
+    open fun scanRoomInfo(token:String,id: String): RequestResult<RoomShowData>
 
 
     open fun carTotal(token:String,projectId: String, roomId: String?): RequestResult<CarTotalData>
