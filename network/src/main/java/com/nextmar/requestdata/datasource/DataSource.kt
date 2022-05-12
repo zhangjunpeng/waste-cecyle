@@ -94,16 +94,21 @@ class DataSource() : DataSourceInterface {
         return post<BagShowData>(params, RESTURL.BagShow, token)
     }
 
-    override fun addBag(token: String, code: String): RequestResult<Any> {
-        TODO("Not yet implemented")
+    override fun addBag(token: String, code: String,params:HashMap<String,String>): RequestResult<Any> {
+        params["code"] = code
+        return post<Any>(params, RESTURL.WhiteBagAdd, token)
     }
 
-    override fun bagWeight(token: String): RequestResult<Any> {
-        TODO("Not yet implemented")
+    override fun bagWeight(token: String,weight: String): RequestResult<Any> {
+        val params = HashMap<String, String>()
+        params["weight"] = weight
+        return get<Any>(params,RESTURL.BagWeight,token)
     }
 
     override fun roomBagList(token: String, roomId: String): RequestResult<RoomBagListData> {
-        TODO("Not yet implemented")
+        val params = HashMap<String, String>()
+        params["room_id"] = roomId
+       return get<RoomBagListData>(params,RESTURL.RoomBagList,token)
     }
 
     override fun editBagCategory(
@@ -111,9 +116,14 @@ class DataSource() : DataSourceInterface {
         bagId: String,
         category: String,
         dialysis: String,
-        placenta: String
+        placenta: String,
     ): RequestResult<Any> {
-        TODO("Not yet implemented")
+        val params = HashMap<String, String>()
+        params["bag_id"] = bagId
+        params["category"] = category
+        params["dialysis"] = dialysis
+        params["placenta"] = placenta
+        return post<Any>(params, RESTURL.EditBagCate, token)
     }
 
     override fun editBagWeight(
@@ -121,7 +131,10 @@ class DataSource() : DataSourceInterface {
         bagId: String,
         weight: String
     ): RequestResult<Any> {
-        TODO("Not yet implemented")
+        val params = HashMap<String, String>()
+        params["bag_id"] = bagId
+        params["weight"] = weight
+        return post<Any>(params, RESTURL.EditBagWeight, token)
     }
 
     override fun editBagQuality(
@@ -135,7 +148,17 @@ class DataSource() : DataSourceInterface {
         commodious: String,
         fewMedicalL: String
     ): RequestResult<Any> {
-        TODO("Not yet implemented")
+        val params = HashMap<String, String>()
+        params["force"] = "1"
+        params["bag_id"] = bagId
+        params["unBroken"] = unBroken
+        params["sterile"] = sterile
+        params["tight"] = tight
+        params["classified"] = classified
+        params["commodious"] = commodious
+        params["few_medical"] = fewMedicalL
+
+        return post<BagShowData>(params, RESTURL.EditBagQua, token)
     }
 
     override fun printOneBag(token: String, bagId: String): RequestResult<Any> {
@@ -143,7 +166,9 @@ class DataSource() : DataSourceInterface {
     }
 
     override fun printRoomBag(token: String, roomId: String): RequestResult<Any> {
-        TODO("Not yet implemented")
+        val params = HashMap<String, String>()
+        params["room_id"] = roomId
+        return post<Any>(params, RESTURL.RoomBagPrint, token)
     }
 
     override fun signRoomBag(

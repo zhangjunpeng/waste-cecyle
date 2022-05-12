@@ -18,9 +18,9 @@ interface DataSourceInterface {
 
     open fun bagShowInfo(token:String,code: String): RequestResult<BagShowData>
 
-    open fun addBag(token:String,code: String): RequestResult<Any>
+    open fun addBag(token:String,code: String,params:HashMap<String,String>): RequestResult<Any>
 
-    open fun bagWeight(token:String,): RequestResult<Any>
+    open fun bagWeight(token:String,weight: String): RequestResult<Any>
 
     open fun roomBagList(token:String,roomId: String): RequestResult<RoomBagListData>
 

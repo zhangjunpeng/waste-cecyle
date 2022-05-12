@@ -28,13 +28,16 @@ class RESTURL {
 
         val BagShow="$BaseUrl/bagapi/bag_show_code"
 
-        val BagAdd="$BaseUrl/bagapi/bag_add"
+        val WhiteBagAdd="$BaseUrl/bagapi/bag_add"
 
         val RoomBagList="$BaseUrl/bagapi/room_bags_list"
 
         val EditBagCate="$BaseUrl/bagapi/bag_category_edit"
 
         val EditBagWeight="$BaseUrl/bagapi/bag_weight_edit"
+
+        val BagWeight="$BaseUrl/bagapi/bag_weight"
+
 
         val EditBagQua="$BaseUrl/bagapi/bag_quality_edit"
 
