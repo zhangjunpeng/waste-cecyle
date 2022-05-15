@@ -7,6 +7,8 @@ object NameSpace {
 
     const val TokenName = "token"
     const val ProjectID = "ProjectID"
+    const val MemberID = "MemberID"
+
     const val Phone="phone"
 
 

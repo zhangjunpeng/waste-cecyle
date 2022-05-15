@@ -78,8 +78,8 @@ data class BagShowData (
 
     val rname: String? = null,
     val mname: String? = null,
-    val nname: JsonObject? = null,
-    val nrname: JsonObject? = null,
+    val nname: String? = null,
+    val nrname: String? = null,
     val quality: Quality? = null
 )
 

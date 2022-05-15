@@ -18,6 +18,7 @@ import com.zjp.medicalwasterecycle.databinding.ActivityLoginBinding
 import com.zjp.medicalwasterecycle.main.MainActivity
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
+import java.util.jar.Attributes
 
 class LoginAC : BaseActivity() {
 
@@ -32,6 +33,9 @@ class LoginAC : BaseActivity() {
             val passwd=binding.editPw.editableText.toString()
             DialogUtil.instance.showProgressDialog(this)
             loginViewModel.login(account,passwd)
+
+//            loginViewModel.scanLogin("YG1000011005")
+
         }
     }
 
@@ -52,6 +56,7 @@ class LoginAC : BaseActivity() {
             SPUtils.getInstance().put(NameSpace.TokenName,it.token)
             SPUtils.getInstance().put(NameSpace.ProjectID,it.projectID)
             SPUtils.getInstance().put(NameSpace.Phone,it.phone)
+            SPUtils.getInstance().put(NameSpace.MemberID,it.id)
 
             startActivity(Intent(this,MainActivity::class.java))
             finish()

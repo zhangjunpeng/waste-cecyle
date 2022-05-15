@@ -9,6 +9,8 @@ import kotlinx.serialization.json.Json
 
 
 import okhttp3.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class DataSource() : DataSourceInterface {
@@ -40,7 +42,7 @@ class DataSource() : DataSourceInterface {
     }
 
 
-    override fun numberLogin(username: String, password: String): RequestResult<LoginData> {
+    override fun numberLogin(username: String, password: String): RequestResult<LoginData?> {
 
         val params = HashMap<String, String>()
         params["phone"] = username
@@ -49,7 +51,7 @@ class DataSource() : DataSourceInterface {
         return post<LoginData>(params, RESTURL.NormalLogin)
     }
 
-    override fun scanLogin(code: String): RequestResult<LoginData> {
+    override fun scanLogin(code: String): RequestResult<LoginData?> {
 
         val params = HashMap<String, String>()
         params["code"] = code
@@ -59,14 +61,14 @@ class DataSource() : DataSourceInterface {
     }
 
 
-    override fun memberShowInfo(token: String, id: String): RequestResult<MemberShowData> {
+    override fun memberShowInfo(token: String, id: String): RequestResult<MemberShowData?> {
         val params = HashMap<String, String>()
         params["id"] = id
         return post<MemberShowData>(params, RESTURL.PersonInfo, token)
 
     }
 
-    override fun scanRoomInfo(token: String, id: String): RequestResult<RoomShowData> {
+    override fun scanRoomInfo(token: String, id: String): RequestResult<RoomShowData?> {
         val params = HashMap<String, String>()
         params["code"] = id
         return get<RoomShowData>(params, RESTURL.CodeGetRoom, token)
@@ -88,15 +90,15 @@ class DataSource() : DataSourceInterface {
         return get<CarTotalData>(params, RESTURL.CarTotal, token)
     }
 
-    override fun bagShowInfo(token: String, code: String): RequestResult<BagShowData> {
+    override fun bagShowInfo(token: String, code: String): RequestResult<BagShowData?> {
         val params = HashMap<String, String>()
         params["code"] = code
-        return post<BagShowData>(params, RESTURL.BagShow, token)
+        return post<BagShowData?>(params, RESTURL.BagShow, token)
     }
 
-    override fun addBag(token: String, code: String,params:HashMap<String,String>): RequestResult<Any> {
+    override fun addBag(token: String, code: String,params:HashMap<String,String>): RequestResult<RoomBagListData?> {
         params["code"] = code
-        return post<Any>(params, RESTURL.WhiteBagAdd, token)
+        return post<RoomBagListData?>(params, RESTURL.WhiteBagAdd, token)
     }
 
     override fun bagWeight(token: String,weight: String): RequestResult<Any> {
@@ -117,7 +119,7 @@ class DataSource() : DataSourceInterface {
         category: String,
         dialysis: String,
         placenta: String,
-    ): RequestResult<Any> {
+    ): RequestResult<Any?> {
         val params = HashMap<String, String>()
         params["bag_id"] = bagId
         params["category"] = category
@@ -130,7 +132,7 @@ class DataSource() : DataSourceInterface {
         token: String,
         bagId: String,
         weight: String
-    ): RequestResult<Any> {
+    ): RequestResult<Any?> {
         val params = HashMap<String, String>()
         params["bag_id"] = bagId
         params["weight"] = weight
@@ -139,25 +141,11 @@ class DataSource() : DataSourceInterface {
 
     override fun editBagQuality(
         token: String,
-        force: String,
         bagId: String,
-        unBroken: String,
-        sterile: String,
-        tight: String,
-        classified: String,
-        commodious: String,
-        fewMedicalL: String
-    ): RequestResult<Any> {
-        val params = HashMap<String, String>()
+        params : HashMap<String, String>
+    ): RequestResult<BagShowData?> {
         params["force"] = "1"
         params["bag_id"] = bagId
-        params["unBroken"] = unBroken
-        params["sterile"] = sterile
-        params["tight"] = tight
-        params["classified"] = classified
-        params["commodious"] = commodious
-        params["few_medical"] = fewMedicalL
-
         return post<BagShowData>(params, RESTURL.EditBagQua, token)
     }
 
@@ -165,7 +153,7 @@ class DataSource() : DataSourceInterface {
         TODO("Not yet implemented")
     }
 
-    override fun printRoomBag(token: String, roomId: String): RequestResult<Any> {
+    override fun printRoomBag(token: String, roomId: String): RequestResult<Any?> {
         val params = HashMap<String, String>()
         params["room_id"] = roomId
         return post<Any>(params, RESTURL.RoomBagPrint, token)
@@ -175,7 +163,7 @@ class DataSource() : DataSourceInterface {
         token: String,
         roomId: String,
         signToken: String
-    ): RequestResult<Any> {
+    ): RequestResult<Any?> {
         val paramMap = HashMap<String, String>()
         paramMap["room_id"] = roomId
         paramMap["signToken"]
@@ -247,7 +235,7 @@ class DataSource() : DataSourceInterface {
         TODO("Not yet implemented")
     }
 
-    inline fun <reified T : Any> post(
+    inline fun <reified T : Any?> post(
         params: HashMap<String, String>,
         url: String,
         token: String? = null
@@ -269,18 +257,23 @@ class DataSource() : DataSourceInterface {
             val call: Call = client.newCall(request)
             val response = call.execute()
             val dataStr = response.body!!.string()
-            LogUtils.i(dataStr)
+
+
+            LogUtils.i(url+"\n"+unicodeToCN(
+                dataStr
+            ))
             if (response.isSuccessful) {
                 val model = Json.decodeFromString<ResultModel<T>>(dataStr)
-                return if (model.res!!) {
-                    RequestResult.Success(model.data as T)
-
-                } else {
-                    val error = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
-                    RequestResult.Error(
-                        error
-                    )
-                }
+                return  RequestResult.Success(model.data)
+//                if (model.res!!) {
+//                    RequestResult.Success(model.data as T)
+//
+//                } else {
+//                    val error = Json.decodeFromString<ResultModel<Any>>(dataStr)
+//                    RequestResult.Error(
+//                        error
+//                    )
+//                }
 
             } else {
                 val model = Json.decodeFromString<ResultModel<Nothing>>(dataStr)
@@ -322,7 +315,7 @@ class DataSource() : DataSourceInterface {
             val call: Call = client.newCall(request)
             val response = call.execute()
             val dataStr = response.body!!.string()
-            LogUtils.i(dataStr)
+            LogUtils.i(url+"\n"+unicodeToCN(dataStr))
             if (response.isSuccessful) {
                 val model = Json.decodeFromString<ResultModel<T>>(dataStr)
                 return if (model.res!!) {
@@ -348,5 +341,34 @@ class DataSource() : DataSourceInterface {
             )
         }
     }
+
+    fun encode(unicode: String): String {
+        val builder = StringBuilder()
+        val hex = unicode.split("\\\\u".toRegex()).toTypedArray()
+        for (i in 1 until hex.size) {
+            val data = hex[i].toInt(16)
+            builder.append(data.toChar())
+        }
+        return builder.toString()
+    }
+
+    /**
+     * Unicode转 汉字字符串
+     *
+     * @param str
+     * @return
+     */
+    fun unicodeToCN(str: String): String? {
+        var str = str
+        val pattern: Pattern = Pattern.compile("(\\\\u(\\p{XDigit}{4}))")
+        val matcher: Matcher = pattern.matcher(str)
+        var ch: Char
+        while (matcher.find()) {
+            ch = matcher.group(2).toInt(16).toChar()
+            str = str.replace(matcher.group(1), ch.toString() + "")
+        }
+        return str
+    }
+
 
 }

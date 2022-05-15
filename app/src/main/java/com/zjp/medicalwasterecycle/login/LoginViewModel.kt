@@ -15,7 +15,7 @@ class LoginViewModel(val dataSource: DataSource) : BaseViewModel() {
 
     val appVersionModelLiveData = MutableLiveData<Nothing>()
 
-    val loginResult = MutableLiveData<LoginData>()
+    val loginResult = MutableLiveData<LoginData?>()
     val errorResult = MutableLiveData<ResultModel<Nothing>>()
 
 
@@ -24,7 +24,7 @@ class LoginViewModel(val dataSource: DataSource) : BaseViewModel() {
             return@launch withContext(Dispatchers.IO){
                 val result=dataSource.numberLogin(account,password)
                 if (result is RequestResult.Success){
-                    loginResult.postValue(result.data as LoginData)
+                    loginResult.postValue(result.data as LoginData?)
                 }else if (result is RequestResult.Error){
                     errorResult.postValue(result.error)
                 }
@@ -39,7 +39,7 @@ class LoginViewModel(val dataSource: DataSource) : BaseViewModel() {
             return@launch withContext(Dispatchers.IO){
                 val result=dataSource.scanLogin(code)
                 if (result is RequestResult.Success){
-                    loginResult.postValue(result.data)
+                    loginResult.postValue(result.data as LoginData?)
                 }else if (result is RequestResult.Error){
                     errorResult.postValue(result.error)
                 }

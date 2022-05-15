@@ -41,6 +41,11 @@ class MainActivity : BaseActivity() {
         binding.accountLayout.setOnClickListener {
             startActivity(Intent(this,AccountActivity::class.java))
         }
+        binding.scanLayout.setOnClickListener {
+            val intent1=Intent(this,RoomScanActivity::class.java)
+            intent1.putExtra("code","100683")
+            startActivity(intent1)
+        }
     }
 
 

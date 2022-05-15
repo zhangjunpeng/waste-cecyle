@@ -6,10 +6,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.nextmar.requestdata.NameSpace
 import com.nextmar.requestdata.RequestResult
 import com.nextmar.requestdata.datasource.DataSource
-import com.nextmar.requestdata.model.MemberShowData
-import com.nextmar.requestdata.model.ResultModel
-import com.nextmar.requestdata.model.RoomBagListData
-import com.nextmar.requestdata.model.RoomShowData
+import com.nextmar.requestdata.model.*
 import com.zjp.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,12 +15,15 @@ import kotlinx.coroutines.withContext
 class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
 
 
-    val roomShowDataResult = MutableLiveData<RoomShowData>()
+    private var isWhiteBag: Boolean = false
+    val roomShowDataResult = MutableLiveData<RoomShowData?>()
     val errorResult = MutableLiveData<ResultModel<Nothing>>()
-    val roomBagListResult = MutableLiveData<RoomBagListData>()
+    val roomBagListResult = MutableLiveData<RoomBagListData?>()
+    val bagInfoResult = MutableLiveData<BagShowData?>()
 
 
-    fun getRoomInfo(code:String){
+
+    fun getRoomInfo(code: String) {
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
                 val result = dataSource.scanRoomInfo(
@@ -55,4 +55,78 @@ class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
             }
         }
     }
+
+    fun showBagInfo(code: String) {
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.bagShowInfo(
+                    SPUtils.getInstance().getString(NameSpace.TokenName),
+                    code
+                )
+                if (result is RequestResult.Success) {
+
+                    bagInfoResult.postValue(result.data)
+
+                } else if (result is RequestResult.Error) {
+                    errorResult.postValue(result.error)
+                }
+            }
+        }
+    }
+
+
+    val bagQuaData = MutableLiveData<HashMap<String, String>>().apply {
+        value = HashMap<String, String>().apply {
+            this["unbroken"] = "1"
+            this["sterile"] = "0"
+            this["tight"] = "0"
+            this["classified"] = "0"
+            this["commodious"] = "0"
+            this["few_medical"] = "1"
+            this["dialysis"]="1"
+            this["placenta"]="1"
+
+        }
+    }
+
+
+    fun changeBagStatus(bagId: String) {
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.editBagQuality(
+                    SPUtils.getInstance().getString(NameSpace.TokenName),
+                    bagId,
+                    bagQuaData.value!!
+                )
+                if (result is RequestResult.Success) {
+
+                    bagInfoResult.postValue(result.data)
+
+                } else if (result is RequestResult.Error) {
+                    errorResult.postValue(result.error)
+                }
+            }
+        }
+    }
+
+    fun addBag( code: String,params:HashMap<String,String>){
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.addBag(
+                    SPUtils.getInstance().getString(NameSpace.TokenName),
+                    code,
+                    params
+                )
+                if (result is RequestResult.Success){
+                    if (result.data!=null){
+                        roomBagListResult.postValue(result.data!!)
+                    }
+                }else if (result is RequestResult.Error){
+                    errorResult.postValue(result.error)
+
+                }
+            }
+        }
+    }
+
 }
