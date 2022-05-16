@@ -1,8 +1,10 @@
 package com.zjp.medicalwasterecycle.roomscan
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.GridView
 import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityRoomScanBinding
+import com.zjp.medicalwasterecycle.databinding.DialogStatusBagBinding
 import com.zjp.medicalwasterecycle.main.MainViewModel
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
@@ -20,6 +23,8 @@ class RoomScanActivity : BaseActivity() {
 
     lateinit var binding: ActivityRoomScanBinding
     lateinit var roomScanViewModel: RoomScanViewModel
+    lateinit var dialogBinding:DialogStatusBagBinding
+
 
     val preNum="包裹编号："
     val preRoom1="科室："
@@ -34,7 +39,7 @@ class RoomScanActivity : BaseActivity() {
         this["member_id"]=SPUtils.getInstance().getString(NameSpace.MemberID)
         this["category"]="2"
         this["daysp_type"]="bottle"
-        this["weight"]="0"
+        this["weight"]="20.1"
         this["is_print"]="1"
     }
 
@@ -43,10 +48,18 @@ class RoomScanActivity : BaseActivity() {
 
     override fun setView() {
         binding=ActivityRoomScanBinding.inflate(layoutInflater)
+        dialogBinding=DialogStatusBagBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitleContent(binding.title)
         binding.recylerRoom.layoutManager=LinearLayoutManager(this)
+        binding.changeStatus.setOnClickListener {
+            val dialog=Dialog(this).apply {
+                setContentView(dialogBinding.root)
+                dialogBinding.gridview.adapter=
+                show()
+            }
 
+        }
 
     }
 
@@ -106,7 +119,9 @@ class RoomScanActivity : BaseActivity() {
             DialogUtil.instance.showProgressDialog(this)
             roomScanViewModel.getRoomInfo(code)
             roomScanViewModel.getRoomBagList(code)
-            roomScanViewModel.showBagInfo("BG10000111202998")
+         //test
+            bagId="BG10000111202900"
+            roomScanViewModel.showBagInfo(bagId)
         }
     }
 }

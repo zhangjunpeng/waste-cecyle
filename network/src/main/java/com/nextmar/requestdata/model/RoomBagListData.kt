@@ -14,7 +14,7 @@ import kotlinx.serialization.encoding.*
 data class RoomBagListData (
     val signNum: Long? = null,
     val notSignNum: Long? = null,
-    val weight: Long? = null,
+    val weight: Double? = null,
     val list: List<RoomBagListDataElement>? = null
 )
 

@@ -5,6 +5,11 @@
 
 package com.nextmar.requestdata.model
 
+// To parse the JSON, install kotlin's serialization plugin and do:
+//
+// val json        = Json(JsonConfiguration.Stable)
+// val bagShowData = json.parse(BagShowData.serializer(), jsonString)
+
 import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
@@ -28,10 +33,13 @@ data class BagShowData (
     val memberID: String? = null,
 
     @SerialName("store_member_id")
-    val storeMemberID: JsonObject? = null,
+    val storeMemberID: String? = null,
+
+    @SerialName("deliver_member_id")
+    val deliverMemberID: String? = null,
 
     @SerialName("dis_member_id")
-    val disMemberID: JsonObject? = null,
+    val disMemberID: String? = null,
 
     @SerialName("mdays_id")
     val mdaysID: String? = null,
@@ -49,29 +57,38 @@ data class BagShowData (
 
     val status: String? = null,
 
+    @SerialName("is_print")
+    val isPrint: String? = null,
+
     @SerialName("reg_time")
-    val regTime: JsonObject? = null,
+    val regTime: String? = null,
 
     @SerialName("scan_time")
-    val scanTime: JsonObject? = null,
+    val scanTime: String? = null,
 
     @SerialName("collect_time")
-    val collectTime: JsonObject? = null,
+    val collectTime: String? = null,
 
     @SerialName("instock_time")
     val instockTime: String? = null,
 
     @SerialName("deliver_time")
-    val deliverTime: JsonObject? = null,
+    val deliverTime: String? = null,
 
     @SerialName("add_time")
     val addTime: String? = null,
+
+    @SerialName("is_sync")
+    val isSync: String? = null,
 
     @SerialName("sign_img")
     val signImg: String? = null,
 
     @SerialName("sign_time")
     val signTime: String? = null,
+
+    @SerialName("is_abnormal")
+    val isAbnormal: String? = null,
 
     @SerialName("last_time")
     val lastTime: String? = null,
@@ -90,6 +107,10 @@ data class Quality (
     @SerialName("bag_id")
     val bagID: String? = null,
 
+    @SerialName("bag_code")
+    val bagCode: String? = null,
+
+    val year: String? = null,
     val unbroken: String? = null,
     val sterile: String? = null,
     val tight: String? = null,
