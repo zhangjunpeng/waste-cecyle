@@ -17,6 +17,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">left</item>
     </style>
+
     <style name="bag_reset_title">
         <item name="android:textColor">#4D4D4D</item>
         <item name="android:gravity">center</item>
@@ -25,5 +26,14 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textSize">20sp</item>
         <item name="background">@drawable/bag_reset_title_bg</item>
+    </style>
+
+    <style name="bag_info_item_text">
+        <item name="android:textColor">#525252</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">18sp</item>
     </style>
 </resources>

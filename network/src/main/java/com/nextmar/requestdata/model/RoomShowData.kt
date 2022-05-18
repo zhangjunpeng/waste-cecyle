@@ -18,6 +18,9 @@ data class RoomShowData (
     @SerialName("project_id")
     val projectID: String? = null,
 
+    @SerialName("department_id")
+    val departmentID: String? = null,
+
     val name: String? = null,
     val building: String? = null,
     val info: String? = null,

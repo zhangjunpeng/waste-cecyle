@@ -4,20 +4,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class BaseRecyleAdapter: RecyclerView.Adapter<BaseRecyleAdapter.ViewHolder>() {
+abstract class BaseRecyleAdapter: RecyclerView.Adapter<BaseRecyleAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    fun getCate(cate: String) :String{
+        return when (cate) {
+            "1" -> "损伤性"
+            "2" -> "感染性"
+            "3" -> "病理性"
+            "4" -> "药物性"
+            "5" -> "化学性"
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+            else -> ""
+        }
     }
 }

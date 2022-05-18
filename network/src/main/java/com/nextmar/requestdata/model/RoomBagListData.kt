@@ -30,7 +30,7 @@ data class RoomBagListDataElement (
     @SerialName("nurse_id")
     val nurseID: String? = null,
 
-    val weight: Long? = null,
+    val weight: Double? = null,
 
     @SerialName("scan_time")
     val scanTime: String? = null,

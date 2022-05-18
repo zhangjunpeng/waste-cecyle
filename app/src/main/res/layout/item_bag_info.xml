@@ -2,8 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/isprint_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="是否打印" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -17,102 +21,41 @@
             android:layout_height="46dp"
             android:background="@drawable/red_radius"
             android:src="@drawable/infected"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/cate_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="医废分类"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
+    <TextView
+        android:id="@+id/cate_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="医废分类" />
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/batch_num_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="追溯编号"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/batch_num_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="追溯编号" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/room_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="产生科室"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/nurse_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="交接护士"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/weight_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重量"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center">
-        <TextView
-            android:id="@+id/time_item_bag_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="时间"
-            android:textSize="18sp"
-            android:textColor="#525252"
-            android:textStyle="bold"
-            />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/room_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="产生科室" />
+
+
+    <TextView
+        android:id="@+id/nurse_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="交接护士" />
+
+    <TextView
+        android:id="@+id/weight_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="重量" />
+
+    <TextView
+        android:id="@+id/time_item_bag_info"
+        style="@style/bag_info_item_text"
+        android:text="时间"
+
+        />
 </LinearLayout>

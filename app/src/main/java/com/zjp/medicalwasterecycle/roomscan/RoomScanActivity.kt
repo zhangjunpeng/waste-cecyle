@@ -55,8 +55,8 @@ class RoomScanActivity : BaseActivity() {
         binding.changeStatus.setOnClickListener {
             val dialog=Dialog(this).apply {
                 setContentView(dialogBinding.root)
-                dialogBinding.gridview.adapter=
-                show()
+//                dialogBinding.gridview.adapter=
+//                show()
             }
 
         }
@@ -71,6 +71,8 @@ class RoomScanActivity : BaseActivity() {
             binding.belongRoom.text=preRoom2+it!!.name
             whiteBagParams["room_id"] = it.id!!
 
+            roomScanViewModel.getRoomBagList(it.id!!)
+
 
         }
         roomScanViewModel.errorResult.observe(this){
@@ -83,8 +85,7 @@ class RoomScanActivity : BaseActivity() {
             binding.bagInfoRoom.totoalWeight.text=it?.weight.toString()+"KG"
             binding.bagInfoRoom.totalNum.text=it?.signNum.toString()+"包"
             binding.bagInfoRoom.unselectNum.text=it?.notSignNum.toString()+"包"
-
-
+            binding.recylerRoom.adapter=RoomAdapter(this,it!!)
         }
         roomScanViewModel.bagInfoResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()
@@ -118,7 +119,6 @@ class RoomScanActivity : BaseActivity() {
         if (code!=null){
             DialogUtil.instance.showProgressDialog(this)
             roomScanViewModel.getRoomInfo(code)
-            roomScanViewModel.getRoomBagList(code)
          //test
             bagId="BG10000111202900"
             roomScanViewModel.showBagInfo(bagId)
