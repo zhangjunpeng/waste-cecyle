@@ -21,6 +21,8 @@ class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
     val roomBagListResult = MutableLiveData<RoomBagListData?>()
     val bagInfoResult = MutableLiveData<BagShowData?>()
 
+    val addBagResult = MutableLiveData<AddBagData?>()
+
 
 
     fun getRoomInfo(code: String) {
@@ -118,9 +120,7 @@ class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
                     params
                 )
                 if (result is RequestResult.Success){
-                    if (result.data!=null){
-                        roomBagListResult.postValue(result.data!!)
-                    }
+                    addBagResult.postValue(result.data)
                 }else if (result is RequestResult.Error){
                     errorResult.postValue(result.error)
 

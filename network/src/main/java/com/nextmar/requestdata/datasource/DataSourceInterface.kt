@@ -22,7 +22,7 @@ interface DataSourceInterface {
         token: String,
         code: String,
         params: HashMap<String, String>
-    ): RequestResult<RoomBagListData?>
+    ): RequestResult<AddBagData?>
 
     open fun bagWeight(token: String, weight: String): RequestResult<Any>
 

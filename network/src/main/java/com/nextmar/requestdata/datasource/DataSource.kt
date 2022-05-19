@@ -96,9 +96,9 @@ class DataSource() : DataSourceInterface {
         return post<BagShowData?>(params, RESTURL.BagShow, token)
     }
 
-    override fun addBag(token: String, code: String,params:HashMap<String,String>): RequestResult<RoomBagListData?> {
+    override fun addBag(token: String, code: String,params:HashMap<String,String>): RequestResult<AddBagData?> {
         params["code"] = code
-        return post<RoomBagListData?>(params, RESTURL.WhiteBagAdd, token)
+        return post<AddBagData?>(params, RESTURL.WhiteBagAdd, token)
     }
 
     override fun bagWeight(token: String,weight: String): RequestResult<Any> {

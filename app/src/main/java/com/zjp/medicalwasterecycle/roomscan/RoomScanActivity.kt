@@ -1,12 +1,9 @@
 package com.zjp.medicalwasterecycle.roomscan
 
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.view.View
-import android.widget.GridView
-import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.SPUtils
@@ -15,7 +12,6 @@ import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityRoomScanBinding
 import com.zjp.medicalwasterecycle.databinding.DialogStatusBagBinding
-import com.zjp.medicalwasterecycle.main.MainViewModel
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
 
@@ -48,15 +44,17 @@ class RoomScanActivity : BaseActivity() {
 
     override fun setView() {
         binding=ActivityRoomScanBinding.inflate(layoutInflater)
-        dialogBinding=DialogStatusBagBinding.inflate(layoutInflater)
+        dialogBinding=DialogStatusBagBinding.inflate(layoutInflater,binding.root,true)
         setContentView(binding.root)
         setTitleContent(binding.title)
         binding.recylerRoom.layoutManager=LinearLayoutManager(this)
         binding.changeStatus.setOnClickListener {
             val dialog=Dialog(this).apply {
                 setContentView(dialogBinding.root)
-//                dialogBinding.gridview.adapter=
-//                show()
+                dialogBinding.gridview.layoutManager =
+                    GridLayoutManager(this@RoomScanActivity, 4,RecyclerView.HORIZONTAL,false)
+                dialogBinding.gridview.adapter = RoomBagStatusAdapter(this@RoomScanActivity)
+                show()
             }
 
         }
@@ -90,15 +88,24 @@ class RoomScanActivity : BaseActivity() {
         roomScanViewModel.bagInfoResult.observe(this){
             DialogUtil.instance.dismissProgressDialog()
 
-            if (it==null){
+            if (it == null) {
                 addDefaultInfo()
-            }else{
-                binding.nurse.text=preNurse+it.nrname
-                binding.cateWaste.text=preCate+it.category
-                binding.changeCate.visibility=View.VISIBLE
-
+            } else {
+                binding.nurse.text = preNurse + it.nrname
+                binding.cateWaste.text = preCate + it.category
+                binding.changeCate.visibility = View.VISIBLE
             }
+        }
 
+        roomScanViewModel.addBagResult.observe(this) {
+            if (it == null) {
+                return@observe
+            }
+            binding.bagInfoRoom.totoalWeight.text = it?.weight.toString() + "KG"
+            binding.bagInfoRoom.totalNum.text = it?.signNum.toString() + "包"
+            binding.bagInfoRoom.unselectNum.text = it?.notSignNum.toString() + "包"
+
+            roomScanViewModel.getRoomBagList(whiteBagParams["room_id"].toString())
         }
     }
 
@@ -120,7 +127,7 @@ class RoomScanActivity : BaseActivity() {
             DialogUtil.instance.showProgressDialog(this)
             roomScanViewModel.getRoomInfo(code)
          //test
-            bagId="BG10000111202900"
+            bagId = "BG10000111202903"
             roomScanViewModel.showBagInfo(bagId)
         }
     }

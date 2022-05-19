@@ -2,25 +2,12 @@ package com.zjp.medicalwasterecycle.roomscan
 
 import android.content.Context
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.nextmar.requestdata.model.RoomBagListData
 import com.zjp.base.BaseRecyleAdapter
-import com.zjp.medicalwasterecycle.databinding.ItemBagInfoBinding
 
-class RoomAdapter(val context: Context, val data: RoomBagListData) : BaseRecyleAdapter() {
+class RoomAdapter(con: Context, val data: RoomBagListData) : BaseRecyleAdapter(con) {
 
-
-    lateinit var binding: ItemBagInfoBinding
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): BaseRecyleAdapter.ViewHolder {
-        binding = ItemBagInfoBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding.root)
-    }
 
     override fun onBindViewHolder(holder: BaseRecyleAdapter.ViewHolder, position: Int) {
         binding.roomItemBagInfo.visibility = View.GONE
@@ -48,16 +35,13 @@ class RoomAdapter(val context: Context, val data: RoomBagListData) : BaseRecyleA
                 binding.timeItemBagInfo.text = scanTime
                 binding.weightItemBagInfo.text = weight.toString()
             }
+            binding.iconItemBagInfo.visibility = View.VISIBLE
+            binding.iconItemBagInfo.background = bgList[position % 5]
         }
     }
 
-
-    override fun getItemId(p0: Int): Long {
-        TODO("Not yet implemented")
-    }
-
     override fun getItemCount(): Int {
-        return data.list!!.size + 1
+        return (data.list?.size ?: 0) + 1
 
     }
 
