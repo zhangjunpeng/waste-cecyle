@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="60dp"
+        android:text="包裹类型"
+        android:textColor="#363636"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/bag_category_item_text"
+            android:text="感\n染\n性" />
+
+        <TextView
+            style="@style/bag_category_item_text"
+            android:text="损\n伤\n性" />
+
+        <TextView
+            style="@style/bag_category_item_text"
+            android:text="病\n理\n性" />
+
+        <TextView
+            style="@style/bag_category_item_text"
+            android:text="药\n物\n性" />
+
+        <TextView
+            style="@style/bag_category_item_text"
+            android:text="化\n学\n性"
+            />
+
+    </LinearLayout>
+</LinearLayout>

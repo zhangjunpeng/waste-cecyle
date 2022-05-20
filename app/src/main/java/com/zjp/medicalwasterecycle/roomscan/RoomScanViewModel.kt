@@ -76,6 +76,15 @@ class RoomScanViewModel(val dataSource: DataSource)  : BaseViewModel() {
         }
     }
 
+    val quaKeyList=ArrayList<String>().apply {
+        this.add("unbroken")
+        this.add("sterile")
+        this.add("tight")
+        this.add("classified")
+        this.add("commodious")
+        this.add("few_medical")
+    }
+
 
     val bagQuaData = MutableLiveData<HashMap<String, String>>().apply {
         value = HashMap<String, String>().apply {

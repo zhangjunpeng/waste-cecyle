@@ -9,12 +9,14 @@ import com.zjp.base.BaseRecyleAdapter
 import com.zjp.medicalwasterecycle.databinding.ItemBagInfoBinding
 import com.zjp.medicalwasterecycle.databinding.ItemStatusBagDialogBinding
 
-class RoomBagStatusAdapter(val context: Context): RecyclerView.Adapter<RoomBagStatusAdapter.ViewHolder>() {
+class RoomBagStatusAdapter(val context: Context,val viewModel: RoomScanViewModel): RecyclerView.Adapter<RoomBagStatusAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
     lateinit var binding: ItemStatusBagDialogBinding
+    val map= viewModel.bagQuaData.value!!
+
 
     val nameList=ArrayList<String>().apply {
         add("包裹是否破损")
@@ -35,9 +37,17 @@ class RoomBagStatusAdapter(val context: Context): RecyclerView.Adapter<RoomBagSt
 
     override fun onBindViewHolder(holder: RoomBagStatusAdapter.ViewHolder, position: Int) {
         binding.name.text=nameList[position]
+        binding.switchBag.isChecked=  map[viewModel.quaKeyList[position]]=="0"
+        binding.switchBag.setOnCheckedChangeListener { _, isChecked ->
+            map[viewModel.quaKeyList[position]]=when(isChecked){
+                true->"0"
+                false->"1"
+            }
+        }
     }
 
     override fun getItemCount(): Int {
         return 6
     }
+
 }

@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_height="wrap_content">
+    android:layout_height="70dp"
+    android:gravity="center"
+    >
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
@@ -11,13 +13,16 @@
         android:textSize="24sp"
         android:textColor="#636363"
         />
-    <androidx.appcompat.widget.SwitchCompat
+    <com.kyleduo.switchbutton.SwitchButton
         android:id="@+id/switch_bag"
         android:layout_width="69dp"
         app:showText="true"
         app:switchMinWidth="69dp"
-        android:textOn="是"
-        android:textOff="否"
-        android:minHeight="23dp"
-        android:layout_height="23dp"/>
+        app:kswTextOff="否"
+        app:kswTextOn="是"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        app:kswThumbColor="#43CF7C"
+        app:kswTintColor="#43CF7C"
+        android:layout_height="40dp"/>
 </LinearLayout>
