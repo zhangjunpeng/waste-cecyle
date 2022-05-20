@@ -103,6 +103,8 @@ class RoomScanActivity : BaseActivity() {
 
                 show()
 
+                categoryDialogBinding.ganran.isSelected=true
+
                 //放在show()之后，不然有些属性是没有效果的，比如height和width
                 val dialogWindow: Window = window!!
                 val d: Display = this@RoomScanActivity.display!! // 获取屏幕宽、高用
