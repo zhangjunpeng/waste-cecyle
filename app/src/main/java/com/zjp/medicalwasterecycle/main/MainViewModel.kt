@@ -28,7 +28,7 @@ class MainViewModel(val dataSource: DataSource) : BaseViewModel() {
                     "1"
                 )
                 if (result is RequestResult.Success) {
-                    memberShowInfonResult.postValue(result.data)
+                    memberShowInfonResult.postValue(result.data!!)
                 } else if (result is RequestResult.Error) {
                     errorResult.postValue(result.error)
                 }
@@ -46,7 +46,7 @@ class MainViewModel(val dataSource: DataSource) : BaseViewModel() {
                     null
                 )
                 if (result is RequestResult.Success) {
-                    carTotalResult.postValue(result.data)
+                    carTotalResult.postValue(result.data!!)
                 } else if (result is RequestResult.Error) {
                     errorResult.postValue(result.error)
                 }

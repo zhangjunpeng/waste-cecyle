@@ -132,4 +132,18 @@ data class Quality (
 
     @SerialName("last_time")
     val lastTime: String? = null
-)
+){
+    fun toMap():HashMap<String,String>{
+        val map=HashMap<String,String>().apply {
+            this["unbroken"] =unbroken.toString()
+            this["sterile"] = sterile.toString()
+            this["tight"] = tight.toString()
+            this["classified"] = classified.toString()
+            this["commodious"] = commodious.toString()
+            this["few_medical"] = fewMedical.toString()
+            this["dialysis"]=dialysis.toString()
+            this["placenta"]=placenta.toString()
+        }
+        return map
+    }
+}

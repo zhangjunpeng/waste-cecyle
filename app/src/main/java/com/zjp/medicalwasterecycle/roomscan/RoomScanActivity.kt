@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Build
 import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,7 @@ class RoomScanActivity : BaseActivity() {
 
 
     var statusDialog: Dialog? = null
-    var categoryDialog:Dialog?=null
+    var categoryDialog: Dialog? = null
 
     val preNum = "包裹编号："
     val preRoom1 = "科室："
@@ -55,7 +56,7 @@ class RoomScanActivity : BaseActivity() {
     override fun setView() {
         binding = ActivityRoomScanBinding.inflate(layoutInflater)
         dialogBinding = DialogStatusBagBinding.inflate(layoutInflater)
-        categoryDialogBinding= DialogCategoryBagBinding.inflate(layoutInflater)
+        categoryDialogBinding = DialogCategoryBagBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitleContent(binding.title)
         binding.recylerRoom.layoutManager = LinearLayoutManager(this)
@@ -63,6 +64,9 @@ class RoomScanActivity : BaseActivity() {
             val adapter = RoomBagStatusAdapter(this@RoomScanActivity, roomScanViewModel)
             dialogBinding.gridview.adapter = adapter
             statusDialog?.show()
+        }
+        binding.changeCate.setOnClickListener {
+            categoryDialog?.show()
         }
 
         initDialog()
@@ -101,10 +105,15 @@ class RoomScanActivity : BaseActivity() {
                 //自定义的东西
                 setContentView(categoryDialogBinding.root)
 
-                show()
+//                show()
 
-                categoryDialogBinding.ganran.isSelected=true
+                // TODO: 点击处理
+                categoryDialogBinding.categoryLayout.children.forEach { it ->
+                    it.setOnClickListener { view->
+                        val index=categoryDialogBinding.categoryLayout.children.indexOf(it)
 
+                    }
+                }
                 //放在show()之后，不然有些属性是没有效果的，比如height和width
                 val dialogWindow: Window = window!!
                 val d: Display = this@RoomScanActivity.display!! // 获取屏幕宽、高用
@@ -153,6 +162,10 @@ class RoomScanActivity : BaseActivity() {
                 binding.changeCate.visibility = View.VISIBLE
                 bagId = it.id.toString()
 
+                if (it.quality!=null){
+                    roomScanViewModel.bagQuaData.postValue(it.quality!!.toMap())
+                }
+
             }
         }
 
@@ -168,20 +181,26 @@ class RoomScanActivity : BaseActivity() {
         }
         roomScanViewModel.bagQuaData.observe(this) {
             roomScanViewModel.changeBagStatus(bagId)
-            binding.isbroken.text="包裹是否破损(${getIsString(it[roomScanViewModel.quaKeyList[0]]=="0")})"
-            binding.isdisinfect.text="包裹是否消毒(${getIsString(it[roomScanViewModel.quaKeyList[1]]=="0")})"
-            binding.istight.text="包裹封口严密(${getIsString(it[roomScanViewModel.quaKeyList[2]]=="0")})"
-            binding.isclassify.text="包裹分类收集(${getIsString(it[roomScanViewModel.quaKeyList[3]]=="0")})"
-            binding.islittle.text="包裹小于3/4  (${getIsString(it[roomScanViewModel.quaKeyList[4]]=="0")})"
-            binding.iscontain.text="含有药物废物(${getIsString(it[roomScanViewModel.quaKeyList[5]]=="0")})"
+            binding.isbroken.text =
+                "包裹是否破损(${getIsString(it[roomScanViewModel.quaKeyList[0]] == "0")})"
+            binding.isdisinfect.text =
+                "包裹是否消毒(${getIsString(it[roomScanViewModel.quaKeyList[1]] == "0")})"
+            binding.istight.text =
+                "包裹封口严密(${getIsString(it[roomScanViewModel.quaKeyList[2]] == "0")})"
+            binding.isclassify.text =
+                "包裹分类收集(${getIsString(it[roomScanViewModel.quaKeyList[3]] == "0")})"
+            binding.islittle.text =
+                "包裹小于3/4  (${getIsString(it[roomScanViewModel.quaKeyList[4]] == "0")})"
+            binding.iscontain.text =
+                "含有药物废物(${getIsString(it[roomScanViewModel.quaKeyList[5]] == "0")})"
 
         }
     }
 
-    fun getIsString(sta:Boolean):String{
-        return if (sta){
+    fun getIsString(sta: Boolean): String {
+        return if (sta) {
             "是"
-        }else{
+        } else {
             "否"
         }
     }
