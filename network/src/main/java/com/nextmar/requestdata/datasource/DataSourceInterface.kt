@@ -30,7 +30,8 @@ interface DataSourceInterface {
 
     open fun editBagCategory(
         token: String,
-        bagId: String, category: String, dialysis: String, placenta: String
+        bagId: String,
+        params : HashMap<String, String>
     ): RequestResult<Any?>
 
     open fun editBagWeight(token: String, bagId: String, weight: String): RequestResult<Any?>

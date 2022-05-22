@@ -126,7 +126,21 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
                 )
                 if (result is RequestResult.Success) {
 
-                    bagInfoResult.postValue(result.data)
+                } else if (result is RequestResult.Error) {
+                    errorResult.postValue(result.error)
+                }
+            }
+        }
+    }
+
+    fun changeBagCategory(bagId: String,params: HashMap<String, String> /* = java.util.HashMap<kotlin.String, kotlin.String> */) {
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.editBagCategory(
+                    SPUtils.getInstance().getString(NameSpace.TokenName), bagId, params
+                )
+                if (result is RequestResult.Success) {
+                    categoryData.postValue(params)
 
                 } else if (result is RequestResult.Error) {
                     errorResult.postValue(result.error)

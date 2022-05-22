@@ -116,15 +116,9 @@ class DataSource() : DataSourceInterface {
     override fun editBagCategory(
         token: String,
         bagId: String,
-        category: String,
-        dialysis: String,
-        placenta: String,
+        params : HashMap<String, String>
     ): RequestResult<Any?> {
-        val params = HashMap<String, String>()
         params["bag_id"] = bagId
-        params["category"] = category
-        params["dialysis"] = dialysis
-        params["placenta"] = placenta
         return post<Any>(params, RESTURL.EditBagCate, token)
     }
 

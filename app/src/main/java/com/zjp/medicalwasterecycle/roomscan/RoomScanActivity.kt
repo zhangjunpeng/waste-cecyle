@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,9 @@ class RoomScanActivity : BaseActivity() {
     lateinit var roomScanViewModel: RoomScanViewModel
     lateinit var dialogBinding: DialogStatusBagBinding
     lateinit var categoryDialogBinding: DialogCategoryBagBinding
+
+
+    var tempCategoryMap: HashMap<String, String>? = null
 
 
     var statusDialog: Dialog? = null
@@ -67,6 +71,7 @@ class RoomScanActivity : BaseActivity() {
         }
         binding.changeCate.setOnClickListener {
             categoryDialog?.show()
+            tempCategoryMap = roomScanViewModel.categoryData.value
         }
 
         initDialog()
@@ -106,13 +111,75 @@ class RoomScanActivity : BaseActivity() {
                 setContentView(categoryDialogBinding.root)
 
 //                show()
-
-                // TODO: 点击处理
                 categoryDialogBinding.categoryLayout.children.forEach { it ->
-                    it.setOnClickListener { view->
-                        val index=categoryDialogBinding.categoryLayout.children.indexOf(it)
+                    it.isSelected = false
+                    val index = categoryDialogBinding.categoryLayout.children.indexOf(it)
+
+                    if (tempCategoryMap==null){
+                        tempCategoryMap=roomScanViewModel.categoryData.value
+                    }
+                    if (getIndexCategory(index)==tempCategoryMap!!["category"].toString() ) {
+                        it.isSelected = true
+                    }
+
+                    it.setOnClickListener { view ->
+                        categoryDialogBinding.categoryLayout.children.forEach { it ->
+                            it.isSelected = false
+                        }
+
+                        categoryDialogBinding.secondLayout.children.forEach { child ->
+                            child.isSelected = false
+                        }
+                        categoryDialogBinding.shuyeping.isSelected = false
+
+                        tempCategoryMap?.set("category", getIndexCategory(index))
+                        view.isSelected = true
 
                     }
+                }
+                categoryDialogBinding.touxiLayout.setOnClickListener {
+                    categoryDialogBinding.categoryLayout.children.forEach { it ->
+                        it.isSelected = false
+                    }
+                    categoryDialogBinding.shuyeping.isSelected = false
+                    categoryDialogBinding.secondLayout.children.forEach { child ->
+                        child.isSelected = false
+                    }
+                    categoryDialogBinding.categoryLayout[0].isSelected = true
+                    it.isSelected = true
+                }
+                categoryDialogBinding.taipanLayout.setOnClickListener {
+                    categoryDialogBinding.categoryLayout.children.forEach { it ->
+                        it.isSelected = false
+                    }
+                    categoryDialogBinding.shuyeping.isSelected = false
+                    categoryDialogBinding.categoryLayout[2].isSelected = true
+                    categoryDialogBinding.secondLayout.children.forEach { child ->
+                        child.isSelected = false
+                    }
+                    it.isSelected = true
+                }
+                categoryDialogBinding.shuyeping.setOnClickListener {
+                    categoryDialogBinding.categoryLayout.children.forEach { it ->
+                        it.isSelected = false
+                    }
+                    categoryDialogBinding.secondLayout.children.forEach { it ->
+                        it.isSelected = false
+                    }
+
+                    it.isSelected = true
+                }
+                categoryDialogBinding.canceldefault.setOnClickListener {
+                    roomScanViewModel.categoryData.postValue(HashMap<String, String>().apply {
+                        this["category"] = "2"
+                        this["dialysis"] = "1"
+                        this["placenta"] = "1"
+                    })
+                    dismiss()
+                }
+                categoryDialogBinding.setdefault.setOnClickListener {
+                    roomScanViewModel.categoryData.postValue(tempCategoryMap!!)
+                    dismiss()
                 }
                 //放在show()之后，不然有些属性是没有效果的，比如height和width
                 val dialogWindow: Window = window!!
@@ -126,6 +193,17 @@ class RoomScanActivity : BaseActivity() {
             }
         }
 
+    }
+
+    fun getIndexCategory(index:Int):String{
+        return when(index){
+            0-> "2"
+            1-> "1"
+            2-> "3"
+            3-> "4"
+            4-> "5"
+            else->"-1"
+        }
     }
 
     override fun initViewModel() {
@@ -158,11 +236,12 @@ class RoomScanActivity : BaseActivity() {
                 addDefaultInfo()
             } else {
                 binding.nurse.text = preNurse + it.nrname
-                binding.cateWaste.text = preCate + it.category
+                binding.cateWaste.text =
+                    preCate + roomScanViewModel.getCategoryString(it.category!!)
                 binding.changeCate.visibility = View.VISIBLE
                 bagId = it.id.toString()
 
-                if (it.quality!=null){
+                if (it.quality != null) {
                     roomScanViewModel.bagQuaData.postValue(it.quality!!.toMap())
                 }
 
@@ -193,6 +272,9 @@ class RoomScanActivity : BaseActivity() {
                 "包裹小于3/4  (${getIsString(it[roomScanViewModel.quaKeyList[4]] == "0")})"
             binding.iscontain.text =
                 "含有药物废物(${getIsString(it[roomScanViewModel.quaKeyList[5]] == "0")})"
+        }
+        roomScanViewModel.categoryData.observe(this) {
+            binding.cateWaste.text = preCate + roomScanViewModel.getCategoryString(it["category"]!!)
 
         }
     }
