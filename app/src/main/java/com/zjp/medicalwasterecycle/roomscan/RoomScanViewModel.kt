@@ -11,6 +11,8 @@ import com.zjp.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Timer
+import java.util.TimerTask
 
 class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
 
@@ -22,6 +24,41 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
     val bagInfoResult = MutableLiveData<BagShowData?>()
 
     val addBagResult = MutableLiveData<AddBagData?>()
+
+    val widgetData = MutableLiveData<Double>()
+
+    var bagId = ""
+
+    var oldWidget:Double=0.0
+
+
+    val whiteBagParams = HashMap<String, String>().apply {
+        this["project_id"] = SPUtils.getInstance().getString(NameSpace.ProjectID)
+        this["member_id"] = SPUtils.getInstance().getString(NameSpace.MemberID)
+        this["category"] = "2"
+        this["daysp_type"] = "bottle"
+        this["weight"] = "20.1"
+        this["is_print"] = "1"
+    }
+
+
+    val timerTask= object :TimerTask() {
+        override fun run() {
+            if (bagId.isNullOrEmpty()){
+                return
+            }
+            if (isWhiteBag){
+                addBag()
+            }else{
+                addWeiget()
+            }
+        }
+
+    }
+
+    var timer:Timer?=null
+
+
 
 
     fun getRoomInfo(code: String) {
@@ -62,7 +99,7 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
                     SPUtils.getInstance().getString(NameSpace.TokenName), code
                 )
                 if (result is RequestResult.Success) {
-
+                    isWhiteBag = result.data == null
                     bagInfoResult.postValue(result.data)
 
                 } else if (result is RequestResult.Error) {
@@ -133,7 +170,10 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
         }
     }
 
-    fun changeBagCategory(bagId: String,params: HashMap<String, String> /* = java.util.HashMap<kotlin.String, kotlin.String> */) {
+    fun changeBagCategory(
+        bagId: String,
+        params: HashMap<String, String> /* = java.util.HashMap<kotlin.String, kotlin.String> */
+    ) {
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
                 val result = dataSource.editBagCategory(
@@ -149,11 +189,11 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
         }
     }
 
-    fun addBag(code: String, params: HashMap<String, String>) {
+    fun addBag() {
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
                 val result = dataSource.addBag(
-                    SPUtils.getInstance().getString(NameSpace.TokenName), code, params
+                    SPUtils.getInstance().getString(NameSpace.TokenName), bagId, whiteBagParams
                 )
                 if (result is RequestResult.Success) {
                     addBagResult.postValue(result.data)
@@ -163,6 +203,29 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
                 }
             }
         }
+    }
+
+    fun addWeiget(){
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.editBagWeight(
+                    SPUtils.getInstance().getString(NameSpace.TokenName), bagId, ""
+                )
+                if (result is RequestResult.Success) {
+                } else if (result is RequestResult.Error) {
+
+                }
+            }
+        }
+    }
+    
+    fun pirntCode(){
+        // TODO: 打印条码
+    }
+
+    fun getWeiget(): Double {
+        // TODO: 获取重量数据
+        return 0.0
     }
 
 }

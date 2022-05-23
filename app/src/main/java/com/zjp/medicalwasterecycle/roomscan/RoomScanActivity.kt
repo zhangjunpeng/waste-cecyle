@@ -19,9 +19,13 @@ import com.zjp.medicalwasterecycle.databinding.DialogCategoryBagBinding
 import com.zjp.medicalwasterecycle.databinding.DialogStatusBagBinding
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
+import java.util.*
+import kotlin.collections.HashMap
 
 class RoomScanActivity : BaseActivity() {
 
+    var preWidget: Double = 0.0
+    var preTime: Long? = null
     lateinit var binding: ActivityRoomScanBinding
     lateinit var roomScanViewModel: RoomScanViewModel
     lateinit var dialogBinding: DialogStatusBagBinding
@@ -40,18 +44,6 @@ class RoomScanActivity : BaseActivity() {
     val preNurse = "交接护士："
     val preCate = "医废类型："
 
-
-    val whiteBagParams = HashMap<String, String>().apply {
-        this["project_id"] = SPUtils.getInstance().getString(NameSpace.ProjectID)
-        this["member_id"] = SPUtils.getInstance().getString(NameSpace.MemberID)
-        this["category"] = "2"
-        this["daysp_type"] = "bottle"
-        this["weight"] = "20.1"
-        this["is_print"] = "1"
-    }
-
-
-    var bagId = ""
 
     var bagCode = ""
 
@@ -115,10 +107,10 @@ class RoomScanActivity : BaseActivity() {
                     it.isSelected = false
                     val index = categoryDialogBinding.categoryLayout.children.indexOf(it)
 
-                    if (tempCategoryMap==null){
-                        tempCategoryMap=roomScanViewModel.categoryData.value
+                    if (tempCategoryMap == null) {
+                        tempCategoryMap = roomScanViewModel.categoryData.value
                     }
-                    if (getIndexCategory(index)==tempCategoryMap!!["category"].toString() ) {
+                    if (getIndexCategory(index) == tempCategoryMap!!["category"].toString()) {
                         it.isSelected = true
                     }
 
@@ -195,14 +187,14 @@ class RoomScanActivity : BaseActivity() {
 
     }
 
-    fun getIndexCategory(index:Int):String{
-        return when(index){
-            0-> "2"
-            1-> "1"
-            2-> "3"
-            3-> "4"
-            4-> "5"
-            else->"-1"
+    fun getIndexCategory(index: Int): String {
+        return when (index) {
+            0 -> "2"
+            1 -> "1"
+            2 -> "3"
+            3 -> "4"
+            4 -> "5"
+            else -> "-1"
         }
     }
 
@@ -213,7 +205,7 @@ class RoomScanActivity : BaseActivity() {
             DialogUtil.instance.dismissProgressDialog()
             binding.roomName.text = preRoom1 + it!!.name
             binding.belongRoom.text = preRoom2 + it!!.name
-            whiteBagParams["room_id"] = it.id!!
+            roomScanViewModel.whiteBagParams["room_id"] = it.id!!
 
             roomScanViewModel.getRoomBagList(it.id!!)
         }
@@ -239,7 +231,7 @@ class RoomScanActivity : BaseActivity() {
                 binding.cateWaste.text =
                     preCate + roomScanViewModel.getCategoryString(it.category!!)
                 binding.changeCate.visibility = View.VISIBLE
-                bagId = it.id.toString()
+                roomScanViewModel.bagId = it.id.toString()
 
                 if (it.quality != null) {
                     roomScanViewModel.bagQuaData.postValue(it.quality!!.toMap())
@@ -256,10 +248,10 @@ class RoomScanActivity : BaseActivity() {
             binding.bagInfoRoom.totalNum.text = it?.signNum.toString() + "包"
             binding.bagInfoRoom.unselectNum.text = it?.notSignNum.toString() + "包"
 
-            roomScanViewModel.getRoomBagList(whiteBagParams["room_id"].toString())
+            roomScanViewModel.getRoomBagList(roomScanViewModel.whiteBagParams["room_id"].toString())
         }
         roomScanViewModel.bagQuaData.observe(this) {
-            roomScanViewModel.changeBagStatus(bagId)
+            roomScanViewModel.changeBagStatus(roomScanViewModel.bagId)
             binding.isbroken.text =
                 "包裹是否破损(${getIsString(it[roomScanViewModel.quaKeyList[0]] == "0")})"
             binding.isdisinfect.text =
@@ -277,6 +269,20 @@ class RoomScanActivity : BaseActivity() {
             binding.cateWaste.text = preCate + roomScanViewModel.getCategoryString(it["category"]!!)
 
         }
+        roomScanViewModel.widgetData.observe(this) {
+            if (it - preWidget == 0.0) {
+                if (roomScanViewModel.timer == null) {
+                    roomScanViewModel.timer = Timer()
+                    roomScanViewModel.timer?.schedule(roomScanViewModel.timerTask, 3 * 1000)
+                }
+            } else {
+                roomScanViewModel.timer?.cancel()
+                roomScanViewModel.timer = null
+            }
+
+            preWidget = it
+
+        }
     }
 
     fun getIsString(sta: Boolean): String {
@@ -288,8 +294,8 @@ class RoomScanActivity : BaseActivity() {
     }
 
     private fun addDefaultInfo() {
-        whiteBagParams.putAll(roomScanViewModel.bagQuaData.value!!)
-        roomScanViewModel.addBag(bagId, whiteBagParams)
+        roomScanViewModel.whiteBagParams.putAll(roomScanViewModel.bagQuaData.value!!)
+//        roomScanViewModel.addBag()
     }
 
     override fun onRevicerScan(keyStr: String) {
