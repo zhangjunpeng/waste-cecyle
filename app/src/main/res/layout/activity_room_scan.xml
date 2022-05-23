@@ -280,6 +280,7 @@
             android:layout_weight="1"
             android:layout_height="75dp"/>
         <TextView
+            android:id="@+id/room_print"
             android:layout_width="373dp"
             android:layout_height="75dp"
             android:gravity="center"

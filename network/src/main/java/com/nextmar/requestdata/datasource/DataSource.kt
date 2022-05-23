@@ -26,6 +26,10 @@ class DataSource() : DataSourceInterface {
 
     val client = OkHttpClient.Builder().build()
 
+    val json= Json {
+        ignoreUnknownKeys = true
+    }
+
 
     fun getResponse(paramMap: Map<String, String>, url: String): Response {
         val client = OkHttpClient.Builder()
@@ -71,7 +75,7 @@ class DataSource() : DataSourceInterface {
     override fun scanRoomInfo(token: String, id: String): RequestResult<RoomShowData?> {
         val params = HashMap<String, String>()
         params["code"] = id
-        return get<RoomShowData>(params, RESTURL.CodeGetRoom, token)
+        return get<RoomShowData?>(params, RESTURL.CodeGetRoom, token)
     }
 
 
@@ -147,10 +151,10 @@ class DataSource() : DataSourceInterface {
         TODO("Not yet implemented")
     }
 
-    override fun printRoomBag(token: String, roomId: String): RequestResult<Any?> {
+    override fun printRoomBag(token: String, roomId: String): RequestResult<String?> {
         val params = HashMap<String, String>()
         params["room_id"] = roomId
-        return post<Any>(params, RESTURL.RoomBagPrint, token)
+        return post<String?>(params, RESTURL.RoomBagPrint, token)
     }
 
     override fun signRoomBag(
@@ -257,7 +261,7 @@ class DataSource() : DataSourceInterface {
                 dataStr
             ))
             if (response.isSuccessful) {
-                val model = Json.decodeFromString<ResultModel<T>>(dataStr)
+                val model = json.decodeFromString<ResultModel<T>>(dataStr)
                 return  RequestResult.Success(model.data)
 //                if (model.res!!) {
 //                    RequestResult.Success(model.data as T)
@@ -283,7 +287,7 @@ class DataSource() : DataSourceInterface {
         }
     }
 
-    inline fun <reified T : Any> get(
+    inline fun <reified T : Any?> get(
         params: HashMap<String, String>,
         url: String,
         token: String? = null
@@ -311,7 +315,7 @@ class DataSource() : DataSourceInterface {
             val dataStr = response.body!!.string()
             LogUtils.i(url+"\n"+unicodeToCN(dataStr))
             if (response.isSuccessful) {
-                val model = Json.decodeFromString<ResultModel<T>>(dataStr)
+                val model = json.decodeFromString<ResultModel<T>>(dataStr)
                 return if (model.res!!) {
                     RequestResult.Success(model.data as T)
 

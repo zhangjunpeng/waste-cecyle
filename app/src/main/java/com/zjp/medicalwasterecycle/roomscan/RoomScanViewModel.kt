@@ -28,6 +28,8 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
     val widgetData = MutableLiveData<Double>()
 
     var bagId = ""
+    var bagCode = ""
+    var roomId=""
 
     var oldWidget:Double=0.0
 
@@ -48,7 +50,7 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
                 return
             }
             if (isWhiteBag){
-                addBag()
+                addBag(bagCode)
             }else{
                 addWeiget()
             }
@@ -80,15 +82,19 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
     fun getRoomBagList(code: String) {
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
-                val result = dataSource.roomBagList(
-                    SPUtils.getInstance().getString(NameSpace.TokenName), code
-                )
-                if (result is RequestResult.Success) {
-                    roomBagListResult.postValue(result.data)
-                } else if (result is RequestResult.Error) {
-                    errorResult.postValue(result.error)
-                }
+                getRoomList(code)
             }
+        }
+    }
+
+    private fun getRoomList(code: String) {
+        val result = dataSource.roomBagList(
+            SPUtils.getInstance().getString(NameSpace.TokenName), code
+        )
+        if (result is RequestResult.Success) {
+            roomBagListResult.postValue(result.data)
+        } else if (result is RequestResult.Error) {
+            errorResult.postValue(result.error)
         }
     }
 
@@ -189,11 +195,11 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
         }
     }
 
-    fun addBag() {
+    fun addBag(code: String) {
         viewModelScope.launch {
             return@launch withContext(Dispatchers.IO) {
                 val result = dataSource.addBag(
-                    SPUtils.getInstance().getString(NameSpace.TokenName), bagId, whiteBagParams
+                    SPUtils.getInstance().getString(NameSpace.TokenName), code, whiteBagParams
                 )
                 if (result is RequestResult.Success) {
                     addBagResult.postValue(result.data)
@@ -212,6 +218,21 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
                     SPUtils.getInstance().getString(NameSpace.TokenName), bagId, ""
                 )
                 if (result is RequestResult.Success) {
+                } else if (result is RequestResult.Error) {
+
+                }
+            }
+        }
+    }
+
+    fun roomPrint(){
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                val result = dataSource.printRoomBag(
+                    SPUtils.getInstance().getString(NameSpace.TokenName), roomId
+                )
+                if (result is RequestResult.Success) {
+                    getRoomList(roomId)
                 } else if (result is RequestResult.Error) {
 
                 }

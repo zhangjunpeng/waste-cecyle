@@ -48,6 +48,8 @@ data class BagShowData (
     val pdaysID: String? = null,
 
     val weight: String? = null,
+    @SerialName("stock_weight")
+    val stockWeight: String? = null,
     val category: String? = null,
     val info: String? = null,
     val batch: String? = null,

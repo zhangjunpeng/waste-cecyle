@@ -10,9 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.databinding.ActivityRoomScanBinding
 import com.zjp.medicalwasterecycle.databinding.DialogCategoryBagBinding
@@ -20,7 +18,6 @@ import com.zjp.medicalwasterecycle.databinding.DialogStatusBagBinding
 import com.zjp.utils.DialogUtil
 import com.zjp.viewmodel.MyViewModelFactory
 import java.util.*
-import kotlin.collections.HashMap
 
 class RoomScanActivity : BaseActivity() {
 
@@ -45,7 +42,6 @@ class RoomScanActivity : BaseActivity() {
     val preCate = "医废类型："
 
 
-    var bagCode = ""
 
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -64,6 +60,9 @@ class RoomScanActivity : BaseActivity() {
         binding.changeCate.setOnClickListener {
             categoryDialog?.show()
             tempCategoryMap = roomScanViewModel.categoryData.value
+        }
+        binding.roomPrint.setOnClickListener {
+            roomScanViewModel.roomPrint()
         }
 
         initDialog()
@@ -202,10 +201,15 @@ class RoomScanActivity : BaseActivity() {
         roomScanViewModel =
             ViewModelProvider(this, MyViewModelFactory.instance)[RoomScanViewModel::class.java]
         roomScanViewModel.roomShowDataResult.observe(this) {
+            if (it == null) {
+                return@observe
+            }
             DialogUtil.instance.dismissProgressDialog()
             binding.roomName.text = preRoom1 + it!!.name
             binding.belongRoom.text = preRoom2 + it!!.name
             roomScanViewModel.whiteBagParams["room_id"] = it.id!!
+            roomScanViewModel.roomId = it.id!!
+
 
             roomScanViewModel.getRoomBagList(it.id!!)
         }
@@ -270,7 +274,7 @@ class RoomScanActivity : BaseActivity() {
 
         }
         roomScanViewModel.widgetData.observe(this) {
-            if (it - preWidget == 0.0) {
+            if (it - preWidget < 0.1) {
                 if (roomScanViewModel.timer == null) {
                     roomScanViewModel.timer = Timer()
                     roomScanViewModel.timer?.schedule(roomScanViewModel.timerTask, 3 * 1000)
@@ -295,13 +299,13 @@ class RoomScanActivity : BaseActivity() {
 
     private fun addDefaultInfo() {
         roomScanViewModel.whiteBagParams.putAll(roomScanViewModel.bagQuaData.value!!)
-//        roomScanViewModel.addBag()
+        roomScanViewModel.addBag(roomScanViewModel.bagCode)
     }
 
     override fun onRevicerScan(keyStr: String) {
         binding.bagNum.text = preNum + keyStr
-        bagCode = keyStr
-        roomScanViewModel.showBagInfo(bagCode)
+        roomScanViewModel.bagCode = keyStr
+        roomScanViewModel.showBagInfo(roomScanViewModel.bagCode)
 
     }
 
@@ -311,8 +315,8 @@ class RoomScanActivity : BaseActivity() {
             DialogUtil.instance.showProgressDialog(this)
             roomScanViewModel.getRoomInfo(code)
             //test
-            bagCode = "BG10000111202903"
-            roomScanViewModel.showBagInfo(bagCode)
+            roomScanViewModel.bagCode = "BG10000111202902"
+            roomScanViewModel.showBagInfo(roomScanViewModel.bagCode)
         }
     }
 }

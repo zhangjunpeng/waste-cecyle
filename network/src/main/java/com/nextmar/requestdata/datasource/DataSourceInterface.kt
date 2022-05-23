@@ -44,7 +44,7 @@ interface DataSourceInterface {
 
     open fun printOneBag(token: String, bagId: String): RequestResult<Any>
 
-    open fun printRoomBag(token: String, roomId: String): RequestResult<Any?>
+    open fun printRoomBag(token: String, roomId: String): RequestResult<String?>
 
     open fun signRoomBag(token: String, roomId: String, signToken: String): RequestResult<Any?>
 
