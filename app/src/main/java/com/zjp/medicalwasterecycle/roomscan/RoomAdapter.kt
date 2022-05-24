@@ -17,8 +17,8 @@ class RoomAdapter(con: Context, val data: RoomBagListData) : BaseRecyleAdapter(c
         } else {
             data.list!![position - 1].apply {
                 binding.isprintBagInfo.text = when (isPrint!!) {
-                    "1" -> "未打印"
-                    "0" -> "已打印"
+                    "0" -> "未打印"
+                    "1" -> "已打印"
                     else -> ""
                 }
                 binding.cateItemBagInfo.text = getCate(category!!)

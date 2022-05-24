@@ -257,7 +257,7 @@ class DataSource() : DataSourceInterface {
             val dataStr = response.body!!.string()
 
 
-            LogUtils.i(url+"\n"+unicodeToCN(
+            LogUtils.i(url+"\n"+params.toString()+"\n"+token.toString()+"\n"+unicodeToCN(
                 dataStr
             ))
             if (response.isSuccessful) {
