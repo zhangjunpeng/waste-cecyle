@@ -64,7 +64,9 @@ class RoomScanActivity : BaseActivity() {
         binding.roomPrint.setOnClickListener {
             roomScanViewModel.roomPrint()
         }
-
+        binding.sign.setOnClickListener {
+            roomScanViewModel.signBag("19f7638f27b39c3af9cef59cf4ef0b9b")
+        }
         initDialog()
     }
 

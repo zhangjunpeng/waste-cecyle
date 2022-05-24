@@ -267,6 +267,7 @@
         android:gravity="bottom"
         >
         <TextView
+            android:id="@+id/sign"
             android:layout_width="118dp"
             android:layout_height="75dp"
             android:gravity="center"

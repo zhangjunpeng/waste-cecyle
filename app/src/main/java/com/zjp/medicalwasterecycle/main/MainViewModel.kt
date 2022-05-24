@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class MainViewModel(val dataSource: DataSource) : BaseViewModel() {
 
-    val memberShowInfonResult = MutableLiveData<MemberShowData>()
+    val memberShowInfonResult = MutableLiveData<MemberShowData?>()
     val errorResult = MutableLiveData<ResultModel<Nothing>>()
     val carTotalResult = MutableLiveData<CarTotalData>()
 
@@ -28,7 +28,7 @@ class MainViewModel(val dataSource: DataSource) : BaseViewModel() {
                     "1"
                 )
                 if (result is RequestResult.Success) {
-                    memberShowInfonResult.postValue(result.data!!)
+                    memberShowInfonResult.postValue(result.data)
                 } else if (result is RequestResult.Error) {
                     errorResult.postValue(result.error)
                 }
@@ -54,5 +54,7 @@ class MainViewModel(val dataSource: DataSource) : BaseViewModel() {
 
         }
     }
+
+
 
 }

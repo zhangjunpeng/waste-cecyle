@@ -11,8 +11,7 @@ import com.zjp.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 
 class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
 
@@ -239,8 +238,20 @@ class RoomScanViewModel(val dataSource: DataSource) : BaseViewModel() {
             }
         }
     }
-    
-    fun pirntCode(){
+
+
+    fun signBag(code: String) {
+        viewModelScope.launch {
+            return@launch withContext(Dispatchers.IO) {
+                dataSource.signRoomBag(
+                    SPUtils.getInstance().getString(NameSpace.TokenName),
+                    roomId, code
+                )
+            }
+        }
+    }
+
+    fun pirntCode() {
         // TODO: 打印条码
     }
 

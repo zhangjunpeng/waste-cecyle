@@ -164,8 +164,8 @@ class DataSource() : DataSourceInterface {
     ): RequestResult<Any?> {
         val paramMap = HashMap<String, String>()
         paramMap["room_id"] = roomId
-        paramMap["signToken"]
-        return post<Any>(paramMap, RESTURL.RoomBagSign, token)
+        paramMap["signToken"] = signToken
+        return post<Any?>(paramMap, RESTURL.RoomBagSign, token)
     }
 
     override fun batchNum(token: String): RequestResult<String> {

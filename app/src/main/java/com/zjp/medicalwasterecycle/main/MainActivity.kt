@@ -1,19 +1,13 @@
 package com.zjp.medicalwasterecycle.main
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.KeyEvent
 import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.SpanUtils
 import com.nextmar.requestdata.NameSpace
 import com.zjp.base.BaseActivity
 import com.zjp.medicalwasterecycle.account.AccountActivity
 import com.zjp.medicalwasterecycle.bagpack.BagPackActivity
-
 import com.zjp.medicalwasterecycle.databinding.ActivityMainBinding
 import com.zjp.medicalwasterecycle.outstock.OutHisActivity
 import com.zjp.medicalwasterecycle.outstock.WasteOutActivity
@@ -60,6 +54,7 @@ class MainActivity : BaseActivity() {
             binding.bagNum.text=it.totalNum.toString()+"包"
         }
         mainViewModel.memberShowInfonResult.observe(this){
+            if (it == null) return@observe
             SPUtils.getInstance().put(NameSpace.ProjectName,it.pname)
             SPUtils.getInstance().put(NameSpace.Phone,it.phone)
             SPUtils.getInstance().put(NameSpace.Name,it.name)
